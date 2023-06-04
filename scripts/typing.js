@@ -592,6 +592,7 @@ function final() {
     str.style.display = 'none';
     focusPopup.removeEventListener('click', focusPopupClickHandler);
     document.removeEventListener('click', documentClickHandler);
+    inputArea.removeEventListener('click', clickHandler)
 }
 
 function moveCaret(index) {
@@ -638,25 +639,33 @@ function moveCaretBack(index) {
     }
 }
 
-inputArea.addEventListener('click', () => {
+inputArea.addEventListener('click', clickHandler)
+
+function clickHandler() {
     popup.style.display = 'flex';
     typingArea.style.opacity = '0';
     inputText.textContent = '';
-    inputText.focus(); focusPopup.removeEventListener('click', focusPopupClickHandler);
+    inputText.focus();
+    focusPopup.removeEventListener('click', focusPopupClickHandler);
     document.removeEventListener('click', documentClickHandler);
-})
+}
 
 popup.addEventListener('click', (event) => {
     if (!inputOwnTextWrapper.contains(event.target)) {
         popup.style.display = 'none';
         typingArea.style.opacity = '1';
+        focusPopup.addEventListener('click', focusPopupClickHandler);
+        document.addEventListener('click', documentClickHandler);
     }
 });
 
 function handlePopupInputButton() {
     let ownInputText = inputText.textContent;
     if (ownInputText.length == 0) {
-        inputText.textContent = "You haven't provided any text please provide some text to continue..."
+        inputText.textContent = "Please input some text";
+    }
+    else if (inputText.textContent === "Please input some text") {
+        inputText.textContent = "";
     }
     else {
         originalString = ownInputText.replace(/\s+/g, " ").trim();
@@ -665,8 +674,15 @@ function handlePopupInputButton() {
         typingArea.style.opacity = '1';
         input.focus();
         input.textContent = '';
+        focusPopup.addEventListener('click', focusPopupClickHandler);
+        document.addEventListener('click', documentClickHandler);
     }
 }
+
+inputText.addEventListener('click', () => {
+    if (inputText.textContent === "Please input some text")
+        inputText.textContent = '';
+})
 
 const focusPopupClickHandler = () => {
     input.focus();
