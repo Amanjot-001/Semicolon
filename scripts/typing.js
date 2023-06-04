@@ -88,14 +88,6 @@ input.addEventListener("keyup", function (event) {
     }
 });
 
-
-// document.addEventListener("keydown", function (event) {
-//     if (event.key === "Enter") {
-//         input.focus();
-//         typingArea.style.overflowY = 'hidden';
-//     }
-// });
-
 // document.addEventListener('click', (event) => {
 //     const clickedElement = event.target;
 //     if (clickedElement.tagName.toLowerCase() !== 'button' &&
@@ -105,7 +97,8 @@ input.addEventListener("keyup", function (event) {
 //         clickedElement.tagName.toLowerCase() !== 'input' &&
 //         clickedElement.tagName.toLowerCase() !== 'i' &&
 //         clickedElement.tagName.toLowerCase() !== 'span' &&
-//         !clickedElement.classList.contains('typing-area')) {
+//         !clickedElement.classList.contains('typing-area') &&
+//         !clickedElement.classList.contains('focus-popup-wrapper')) {
 
 //         if (!mouseCaret.classList.contains('clicked'))
 //             applyNextColorTheme();
@@ -118,7 +111,8 @@ input.addEventListener("keyup", function (event) {
 //         clickedElement.tagName.toLowerCase() !== 'input' &&
 //         clickedElement.tagName.toLowerCase() !== 'i' &&
 //         clickedElement.tagName.toLowerCase() !== 'span' &&
-//         !clickedElement.classList.contains('typing-area')) {
+//         !clickedElement.classList.contains('typing-area') &&
+//         !clickedElement.classList.contains('focus-popup-wrapper')) {
 
 //         mouseCaret.classList.add('clicked');
 //         setTimeout(function () {
@@ -651,7 +645,6 @@ inputArea.addEventListener('click', () => {
     inputText.focus(); focusPopup.removeEventListener('click', focusPopupClickHandler);
     document.removeEventListener('click', documentClickHandler);
 })
-
 
 popup.addEventListener('click', (event) => {
     if (!inputOwnTextWrapper.contains(event.target)) {
