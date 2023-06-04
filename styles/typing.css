@@ -603,12 +603,12 @@ nav {
     display: grid;
 }
 
-
-
 .inputOwnTextWrapper .heading {
     font-size: 1.8rem;
-    color: #646669;
+    color: white;
     pointer-events: none;
+    margin: auto;
+    font-family: var(--font-1);
 }
 
 .input-text {
@@ -617,18 +617,17 @@ nav {
     border: 1px solid #646669;
     outline: none;
     caret-color: yellow;
-    font-size: 1.5rem;
-    /* overflow-x: hidden; */
+    font-size: 1.4rem;
     overflow-y: scroll;
     border-radius: 5px;
     color: white;
+    font-family: 'Roboto Mono', monospace;
 }
 
 .input-text::-webkit-scrollbar {
     background-color: transparent;
     width: 4px;
 }
-
 
 .input-text::-webkit-scrollbar-thumb {
     background-color: var(--main-text-color);
@@ -645,13 +644,13 @@ nav {
     cursor: pointer;
     transition: background .125s, color .125s;
     letter-spacing: 0.1rem;
+    font-family: var(--font-1);
 }
 
 .inputOwnTextWrapper>.button:hover {
     background: whitesmoke;
     color: #050a18;
 }
-
 
 .focus-popup-wrapper {
     position: fixed;
