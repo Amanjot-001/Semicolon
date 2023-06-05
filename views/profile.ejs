@@ -9,6 +9,8 @@
 
     <script src="https://kit.fontawesome.com/040eb06c51.js" crossorigin="anonymous"></script>
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Space+Grotesk&display=swap"
@@ -58,7 +60,7 @@
                 <div class="user-info">
                     <div class="name">
                         <%= userData.name %>
-                        <i class="fa-solid fa-pen-to-square"></i>
+                            <i class="fa-solid fa-pen-to-square"></i>
                     </div>
                     <div class="username">
                         <%= userData.username %>
@@ -67,16 +69,22 @@
             </div>
             <div class="bottom">
                 <div class="best-score">
-                    Best Score: <span><%= userData.bestScore %> wpm</span>
+                    Best Score: <span>
+                        <%= userData.bestScore %> wpm
+                    </span>
                 </div>
                 <div class="rank">
                     Rank: <span>#<%= userData.rank %></span>
                 </div>
                 <div class="completed-tests">
-                    Tests Completed: <span><%= userData.testsTaken %></span>
+                    Tests Completed: <span>
+                        <%= userData.testsTaken %>
+                    </span>
                 </div>
                 <div class="joined-date">
-                    Date joined: <span><%= userData.joined %></span>
+                    Date joined: <span>
+                        <%= userData.joined %>
+                    </span>
                 </div>
             </div>
         </div>
@@ -88,7 +96,9 @@
                 <a class="submit" href="#" onclick="return false;">Submit</a>
             </div>
         </div>
-        <div class="graph"></div>
+        <div class="graph">
+            <div id="chart_div"></div>
+        </div>
         <div class="map">
         </div>
     </div>
