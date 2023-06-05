@@ -206,11 +206,12 @@ app.post('/signIn', async (req, res) => {
       console.log(req.session.user_id)
       console.log(user._id)
       flag2 = true;
+      res.render('index' , {sessionId});
     }
     else {
       flag2 = false;
+      res.render('auth', { flag2 });
     }
-    res.render('index' , {sessionId});
   } catch (error) {
     flag2 = false;
     res.render('auth', { flag2 });
