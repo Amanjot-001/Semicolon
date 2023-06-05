@@ -125,10 +125,6 @@ async function fetchData() {
   data = await Sem1Notes.find({});
 }
 
-async function fetchUserData(req, res) {
-  userData = await User.find({ _id: req.session.user_id });
-}
-
 app.get('/dog', async (req, res) => {
   res.json(data);
 })
@@ -281,6 +277,10 @@ app.get('/logout', async (req, res) => {
     }
   });
 });
+
+app.get('/graphData', async (req,res) => {
+  res.json(userData);
+})
 
 app.get("/", async (req, res) => {
   res.render('index', {sessionId});
