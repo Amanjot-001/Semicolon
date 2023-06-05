@@ -135,11 +135,11 @@ app.get('/dog', async (req, res) => {
 
 
 app.get('/read', async (req, res) => {
-  res.render('read', { data });
+  res.render('read', { data, sessionId });
 })
 
 app.get('/test', (req, res) => {
-  res.render('typing', { content });
+  res.render('typing', { content, sessionId });
 })
 
 app.post('/topicType', (req, res) => {
@@ -148,11 +148,11 @@ app.post('/topicType', (req, res) => {
 })
 
 app.get('/topicTest', (req, res) => {
-  res.render('typing', { content });
+  res.render('typing', { content, sessionId });
 })
 
 app.get('/show', (req, res) => {
-  res.render('show', { topicIndex, subjectIndex, unitIndex, data });
+  res.render('show', { topicIndex, subjectIndex, unitIndex, data, sessionId });
 })
 
 app.get('/sendNotes', async (req, res) => {
@@ -265,10 +265,21 @@ app.get('/profile', async (req, res) => {
     res.render('profile', {userData})
   } catch (error) {
     console.error(error);
-    res.status(500).send('Internal Server Error');
+    res.sendStatus(500);
   }
 });
 
+app.get('/logout', async (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error destroying session:', err);
+      res.sendStatus(500);
+    } else {
+      sessionId = '';
+      res.redirect('/');
+    }
+  });
+});
 
 app.get("/", async (req, res) => {
   res.render('index', {sessionId});
