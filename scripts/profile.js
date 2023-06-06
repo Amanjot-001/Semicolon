@@ -5,17 +5,42 @@ const submit = document.querySelector('.submit');
 const thanksMsg = document.querySelector('.thanks-msg')
 
 edit.addEventListener('click', () => {
+    if (!thanksMsg.classList.contains('hidden')) {
+        thanksMsg.classList.add('hidden');
+        textArea.style.display = 'initial';
+        textMsg.style.display = 'initial';
+        thanksMsg.querySelector('p').textContent = 'Thank You for your Feedback!';
+    }
+    textMsg.textContent = textMsg.textContent.replace(/\s+/g, " ").trim();
     edit.style.color = 'yellow'
-    textArea.setAttribute('contenteditable', 'true');
-    textArea.focus();
-    if (textMsg.textContent == 'Max 80 chars long')
+    textMsg.setAttribute('contenteditable', 'true');
+    textMsg.focus();
+    if (textMsg.textContent === 'Max 80 chars long')
         textMsg.textContent = '';
 })
 
 submit.addEventListener('click', async () => {
-    textArea.blur();
-    textArea.removeAttribute('contenteditable', 'true');
-    if (textMsg.textContent == '' || textMsg.textContent == 'Max 80 chars long') {
+    textMsg.textContent = textMsg.textContent.replace(/\s+/g, " ").trim();
+    textMsg.blur();
+    textMsg.removeAttribute('contenteditable', 'true');
+    if (!thanksMsg.classList.contains('hidden')) {
+        console.log('yo');
+        thanksMsg.classList.add('hidden');
+        thanksMsg.querySelector('p').textContent = 'Thank You for your Feedback!';
+        textArea.style.display = 'initial';
+        textMsg.style.display = 'initial';
+        return;
+    }
+    if (textMsg.textContent.length > 80) {
+        thanksMsg.classList.remove('hidden');
+        thanksMsg.querySelector('p').textContent = 'Oops! More than 80 chars';
+        textMsg.style.display = 'none';
+        textArea.style.display = 'flex';
+        textArea.style.justifyContent = 'center';
+        textArea.style.alignItems = 'center';
+        return;
+    }
+    if (textMsg.textContent === '' || textMsg.textContent === 'Max 80 chars long') {
         textMsg.textContent = 'Max 80 chars long';
         console.log('in if');
     } else {
@@ -29,10 +54,16 @@ submit.addEventListener('click', async () => {
     }
 });
 
+textMsg.addEventListener('paste', (event) => {
+    event.preventDefault();
+    const text = event.clipboardData.getData('text/plain');
+    textMsg.textContent = text;
+});
+
 document.addEventListener('click', (e) => {
-    if (e.target !== edit && e.target !== textArea) {
-        textArea.blur();
-        textArea.removeAttribute('contenteditable', 'true');
+    if (e.target !== edit && e.target !== textArea && e.target !== textMsg) {
+        textMsg.blur();
+        textMsg.removeAttribute('contenteditable', 'true');
         if (textMsg.textContent === '')
             textMsg.textContent = 'Max 80 chars long';
         edit.style.color = 'var(--color-1)';
@@ -51,7 +82,6 @@ async function fetchUserData() {
         .catch(error => {
             console.error('Error:', error);
         });
-
 }
 
 
