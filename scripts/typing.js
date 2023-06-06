@@ -433,6 +433,10 @@ input.addEventListener("input", (e) => {
     }
 });
 
+input.addEventListener('paste', (event) => {
+    event.preventDefault();
+})
+
 time.addEventListener('click', () => {
     if (inputStarted === false) {
         if (clockActive === false) {
@@ -715,6 +719,12 @@ inputText.addEventListener('click', () => {
     if (inputText.textContent === "Please input some text")
         inputText.textContent = '';
 })
+
+inputText.addEventListener('paste', (event) => {
+    event.preventDefault();
+    const text = event.clipboardData.getData('text/plain');
+    inputText.textContent = text;
+});
 
 const focusPopupClickHandler = () => {
     input.focus();

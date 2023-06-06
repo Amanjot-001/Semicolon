@@ -301,6 +301,10 @@ nav {
     border-radius: 5px;
 }
 
+.text-area p:focus {
+    outline: none;
+}
+
 .thanks-msg {
     font-size: 1.5rem;
     display: flex;
