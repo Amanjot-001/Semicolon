@@ -2,7 +2,54 @@ const textArea = document.querySelector('.text-area');
 const textMsg = document.querySelector('.text-area p');
 const edit = document.querySelector('.edit');
 const submit = document.querySelector('.submit');
-const thanksMsg = document.querySelector('.thanks-msg')
+const thanksMsg = document.querySelector('.thanks-msg');
+const nameEditBtn = document.querySelector('.name-edit-btn');
+const userName = document.querySelector('.name span');
+
+nameEditBtn.addEventListener('click', () => {
+    userName.textContent = userName.textContent.replace(/\s+/g, " ").trim();
+
+    if (nameEditBtn.classList.contains('fa-pen-to-square')) {
+        userName.setAttribute('contenteditable', 'true');
+        userName.focus();
+        nameEditBtn.classList.remove('fa-pen-to-square');
+        nameEditBtn.classList.add('fa-check');
+    }
+    else if (nameEditBtn.classList.contains('fa-check')) {
+        updateName();
+        userName.blur();
+        userName.removeAttribute('contenteditable', 'true');
+        nameEditBtn.classList.add('fa-pen-to-square');
+        nameEditBtn.classList.remove('fa-check');
+
+        const tempName = userName.textContent;
+        userName.textContent = 'Name Changed!';
+        
+        nameEditBtn.style.display = 'none';
+
+        setTimeout(() => {
+            userName.textContent = tempName;
+            nameEditBtn.style.display = 'initial';
+        }, 2000);
+    }
+})
+
+userName.addEventListener('paste', (event) => {
+    event.preventDefault();
+    const text = event.clipboardData.getData('text/plain');
+    userName.textContent = text;
+});
+
+userName.addEventListener('focus', () => {
+    const range = document.createRange();
+    const selection = window.getSelection();
+
+    range.selectNodeContents(userName);
+    range.collapse(false);
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+});
 
 edit.addEventListener('click', () => {
     if (!thanksMsg.classList.contains('hidden')) {
@@ -17,9 +64,10 @@ edit.addEventListener('click', () => {
     textMsg.focus();
     if (textMsg.textContent === 'Max 80 chars long')
         textMsg.textContent = '';
+
 })
 
-submit.addEventListener('click', async () => {
+submit.addEventListener('click', () => {
     textMsg.textContent = textMsg.textContent.replace(/\s+/g, " ").trim();
     textMsg.blur();
     textMsg.removeAttribute('contenteditable', 'true');
@@ -42,9 +90,9 @@ submit.addEventListener('click', async () => {
     }
     if (textMsg.textContent === '' || textMsg.textContent === 'Max 80 chars long') {
         textMsg.textContent = 'Max 80 chars long';
-        console.log('in if');
+        // console.log('in if');
     } else {
-        console.log('in else');
+        // console.log('in else');
         updateMsg();
         thanksMsg.classList.remove('hidden');
         textMsg.style.display = 'none';
@@ -60,6 +108,17 @@ textMsg.addEventListener('paste', (event) => {
     textMsg.textContent = text;
 });
 
+textMsg.addEventListener('focus', () => {
+    const range = document.createRange();
+    const selection = window.getSelection();
+
+    range.selectNodeContents(textMsg);
+    range.collapse(false);
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+});
+
 document.addEventListener('click', (e) => {
     if (e.target !== edit && e.target !== textArea && e.target !== textMsg) {
         textMsg.blur();
@@ -67,6 +126,14 @@ document.addEventListener('click', (e) => {
         if (textMsg.textContent === '')
             textMsg.textContent = 'Max 80 chars long';
         edit.style.color = 'var(--color-1)';
+    }
+
+    if (e.target !== nameEditBtn && e.target !== userName) {
+        userName.blur();
+        userName.removeAttribute('contenteditable', 'true');
+        nameEditBtn.style.color = 'var(--color-1)';
+        nameEditBtn.classList.add('fa-pen-to-square');
+        nameEditBtn.classList.remove('fa-check');
     }
 })
 let userData;
@@ -234,6 +301,27 @@ async function updateMsg() {
         });
         if (!response.ok) {
             throw new Error('Failed to update msg');
+        }
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+async function updateName() {
+    console.log('name update')
+    try {
+        const response = await fetch('http://localhost:8080/updateName', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                Name: userName.textContent
+            }),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to update name');
         }
     } catch (error) {
         console.error(error);

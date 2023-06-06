@@ -268,6 +268,18 @@ app.post('/updateMsg', async (req, res) => {
   }
 });
 
+app.post('/updateName', async (req, res) => {
+  try {
+    const name = req.body.Name;
+    userData.name = name;
+    await userData.save();
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error updating name');
+  }
+});
+
 app.get('/userfind', async (req, res) => {
   const user = await User.find({});
   // await User.deleteMany({});

@@ -193,6 +193,11 @@ nav {
     color: white;
 }
 
+.name span:focus {
+    outline: none;
+    caret-color: yellow;
+}
+
 .username {
     color: white;
     font-family: var(--font-1);
