@@ -5,6 +5,7 @@ const submit = document.querySelector('.submit');
 const thanksMsg = document.querySelector('.thanks-msg');
 const nameEditBtn = document.querySelector('.name-edit-btn');
 const userName = document.querySelector('.name span');
+let initUserName = '';
 
 nameEditBtn.addEventListener('click', () => {
     userName.textContent = userName.textContent.replace(/\s+/g, " ").trim();
@@ -14,19 +15,28 @@ nameEditBtn.addEventListener('click', () => {
         userName.focus();
         nameEditBtn.classList.remove('fa-pen-to-square');
         nameEditBtn.classList.add('fa-check');
+        initUserName = userName.textContent;
     }
     else if (nameEditBtn.classList.contains('fa-check')) {
-        updateName();
-        userName.blur();
         userName.removeAttribute('contenteditable', 'true');
         nameEditBtn.classList.add('fa-pen-to-square');
         nameEditBtn.classList.remove('fa-check');
+        userName.blur();
+        if (userName.textContent === '') {
+            userName.textContent = 'Cannot be blank';
+            nameEditBtn.style.display = 'none';
+            setTimeout(() => {
+                userName.textContent = initUserName;
+                nameEditBtn.style.display = 'initial';
+            }, 2000);
+            return;
+        }
+
+        updateName();
 
         const tempName = userName.textContent;
         userName.textContent = 'Name Changed!';
-        
         nameEditBtn.style.display = 'none';
-
         setTimeout(() => {
             userName.textContent = tempName;
             nameEditBtn.style.display = 'initial';
