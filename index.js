@@ -35,8 +35,6 @@ app.use(session({
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs');
 
-
-
 const Sem1 = new mongoose.Schema({
   sem:
     [
@@ -81,8 +79,6 @@ const userSchema = new mongoose.Schema({
   },
   score: [
     {
-      // type: mongoose.Schema.Types.ObjectId,
-      // ref: 'Score'
       wpm: {
         type: String
       },
@@ -111,16 +107,6 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-//   const ScoreSchema = new mongoose.Schema([
-//     {
-//     wpm: String,
-//     accuracy: String
-//   },
-// ]);
-
-//   const Score = mongoose.model('Score', ScoreSchema);
-
-
 async function fetchData() {
   data = await Sem1Notes.find({});
 }
@@ -128,7 +114,6 @@ async function fetchData() {
 app.get('/dog', async (req, res) => {
   res.json(data);
 })
-
 
 app.get('/read', async (req, res) => {
   res.render('read', { data, sessionId });
@@ -190,7 +175,7 @@ app.post('/register', async (req, res) => {
   res.render('auth', { flag });
 });
 
-app.post('/signIn', async (req, res) => {
+app.post('/signIn', async (req, res, next) => {
   const { username, password } = req.body;
   let flag2 = true;
   try {
@@ -202,7 +187,7 @@ app.post('/signIn', async (req, res) => {
       console.log(req.session.user_id)
       console.log(user._id)
       flag2 = true;
-      res.render('index' , {sessionId});
+      res.redirect('/');
     }
     else {
       flag2 = false;
@@ -215,6 +200,10 @@ app.post('/signIn', async (req, res) => {
 })
 
 app.post('/updateScore', async (req, res) => {
+  if (sessionId === '') {
+    res.sendStatus(200);
+    return;
+  }
   const user = await User.findOne({ _id: req.session.user_id });
 
   const S = req.body.score;
@@ -247,7 +236,6 @@ app.post('/updateScore', async (req, res) => {
   res.sendStatus(200);
 })
 
-
 app.get('/userfind', async (req, res) => {
   const user = await User.find({});
   // await User.deleteMany({});
@@ -259,7 +247,7 @@ app.get('/profile', async (req, res) => {
     userData = await User.findOne({ _id: req.session.user_id });
     console.log(req.session.user_id)
     // res.send(userData)
-    res.render('profile', {userData})
+    res.render('profile', { userData })
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
@@ -278,12 +266,17 @@ app.get('/logout', async (req, res) => {
   });
 });
 
-app.get('/graphData', async (req,res) => {
+app.get('/graphData', async (req, res) => {
   res.json(userData);
 })
 
+app.get('/leadborad', async (req, res) => {
+  const users = await User.find({}).sort({ bestScore: -1 });
+  res.json(users);
+})
+
 app.get("/", async (req, res) => {
-  res.render('index', {sessionId});
+  res.render('index', { sessionId });
   if (data == '')
     await fetchData();
 })

@@ -56,7 +56,7 @@ function drawBasic() {
 
     let dataArray = [];
     for (let i = 0; i < userData.score.length; i++) {
-        dataArray.push([i, parseInt(userData.score[i].wpm)]);
+        dataArray.push([i + 1, parseInt(userData.score[i].wpm)]);
     }
     console.log(dataArray);
 
@@ -90,4 +90,47 @@ function drawBasic() {
     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
     chart.draw(data, options);
+}
+
+
+
+google.charts.load("current", { packages: ["calendar"] });
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+    var dataTable = new google.visualization.DataTable();
+    dataTable.addColumn({ type: 'date', id: 'Date' });
+    dataTable.addColumn({ type: 'number', id: 'Won/Loss' });
+    dataTable.addRows([
+        [new Date(2023, 6, 5), 1],
+        [new Date(2023, 3, 14), 2],
+        [new Date(2023, 3, 15), 3],
+        [new Date(2023, 3, 16), 4],
+        [new Date(2023, 3, 17), 5],
+    ]);
+
+    var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
+
+    var options = {
+        calendar: {
+            cellColor: {
+                stroke: 'white',
+                strokeOpacity: 0.5,
+                strokeWidth: 1
+            },
+            cellSize: 18,
+            dayOfWeekLabel: {
+                fontName: 'Times-Roman',
+                fontSize: 12,
+                color: 'white',
+                bold: false,
+                italic: false
+            },
+            dayOfWeekRightSpace: 7,
+            underMonthSpace: 12 ,
+            numMonths: 6
+        }
+    };
+
+    chart.draw(dataTable, options);
 }
