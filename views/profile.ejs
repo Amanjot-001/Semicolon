@@ -89,15 +89,28 @@
             </div>
         </div>
         <div class="review">
-            <p><strong>Leave a review:</strong></p>
-            <div class="text-area">Max 80 chars long</div>
+            <p class="heading"><strong>Leave a review:</strong></p>
+            <div class="text-area">
+                <p>
+                    <% if (!userData.message) { %>
+                        Max 80 chars long
+                        <% } else { %>
+                            <%= userData.message %>
+                                <% } %>
+                </p>
+                <div class="thanks-msg hidden">
+                    <p>Thank You for your Feedback!</p>
+                </div>
+            </div>
             <div class="btns">
                 <a class="edit" href="#" onclick="return false;">Edit</a>
                 <a class="submit" href="#" onclick="return false;">Submit</a>
             </div>
         </div>
         <div class="graph">
-            <div id="chart_div"></div>
+            <div class="line-chart">
+                <div id="chart_div"></div>
+            </div>
         </div>
         <div class="map">
             <div class="heatmap">

@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const moment = require('moment');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 let data = '';
 let userData = '';
 let sessionId = '';
@@ -26,6 +27,7 @@ mongoose
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(session({
   secret: '12121212',
   resave: false,
@@ -84,6 +86,10 @@ const userSchema = new mongoose.Schema({
       },
       accuracy: {
         type: String
+      },
+      date: {
+        type: String,
+        default: moment().format('MMM Do YY')
       }
     }
   ],
@@ -102,10 +108,24 @@ const userSchema = new mongoose.Schema({
   rank: {
     type: Number,
     default: 0
+  },
+  photoNumber: {
+    type: Number,
+    default: 1
+  },
+  message: {
+    type: String,
+    maxlength: 80,
+    default: ''
   }
 });
 
 const User = mongoose.model('User', userSchema);
+
+app.use((req, res, next) => {
+  sessionId = req.cookies.userId;
+  next();
+})
 
 async function fetchData() {
   data = await Sem1Notes.find({});
@@ -182,10 +202,9 @@ app.post('/signIn', async (req, res, next) => {
     const user = await User.findOne({ username });
     const validPassword = await bcrypt.compare(password, user.password);
     if (validPassword) {
-      req.session.user_id = user._id;
-      sessionId = req.session.user_id;
-      console.log(req.session.user_id)
-      console.log(user._id)
+      res.cookie('userId', user._id, { maxAge: 30 * 24 * 60 * 60 * 1000 });
+      sessionId = res.cookie.userId;
+      console.log(res.cookie.userId);
       flag2 = true;
       res.redirect('/');
     }
@@ -204,7 +223,7 @@ app.post('/updateScore', async (req, res) => {
     res.sendStatus(200);
     return;
   }
-  const user = await User.findOne({ _id: req.session.user_id });
+  const user = await User.findOne({ _id: sessionId });
 
   const S = req.body.score;
   const A = req.body.accuracy;
@@ -222,6 +241,8 @@ app.post('/updateScore', async (req, res) => {
   if (S > bestScore)
     user.bestScore = S;
 
+  await user.save();
+
   const users = await User.find({}).sort({ bestScore: -1 });
 
   let rank = 1;
@@ -231,10 +252,21 @@ app.post('/updateScore', async (req, res) => {
     rank++;
   }
 
-  await user.save();
-  console.log(user);
+  // console.log(user);
   res.sendStatus(200);
 })
+
+app.post('/updateMsg', async (req, res) => {
+  try {
+    const msg = req.body.Msg;
+    userData.message = msg;
+    await userData.save();
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error updating message');
+  }
+});
 
 app.get('/userfind', async (req, res) => {
   const user = await User.find({});
@@ -244,8 +276,8 @@ app.get('/userfind', async (req, res) => {
 
 app.get('/profile', async (req, res) => {
   try {
-    userData = await User.findOne({ _id: req.session.user_id });
-    console.log(req.session.user_id)
+    userData = await User.findOne({ _id: sessionId });
+    // console.log(req.session.user_id)
     // res.send(userData)
     res.render('profile', { userData })
   } catch (error) {
@@ -255,15 +287,9 @@ app.get('/profile', async (req, res) => {
 });
 
 app.get('/logout', async (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      console.error('Error destroying session:', err);
-      res.sendStatus(500);
-    } else {
-      sessionId = '';
-      res.redirect('/');
-    }
-  });
+  res.clearCookie('userId');
+  sessionId = '';
+  res.redirect('/');
 });
 
 app.get('/graphData', async (req, res) => {

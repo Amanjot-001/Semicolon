@@ -1,35 +1,46 @@
 const textArea = document.querySelector('.text-area');
+const textMsg = document.querySelector('.text-area p');
 const edit = document.querySelector('.edit');
 const submit = document.querySelector('.submit');
+const thanksMsg = document.querySelector('.thanks-msg')
 
 edit.addEventListener('click', () => {
     edit.style.color = 'yellow'
     textArea.setAttribute('contenteditable', 'true');
     textArea.focus();
-    if (textArea.textContent === 'Max 80 chars long')
-        textArea.textContent = '';
+    if (textMsg.textContent == 'Max 80 chars long')
+        textMsg.textContent = '';
 })
 
-submit.addEventListener('click', () => {
+submit.addEventListener('click', async () => {
     textArea.blur();
     textArea.removeAttribute('contenteditable', 'true');
-    if (textArea.textContent === '')
-        textArea.textContent = 'Max 80 chars long';
-
-})
+    if (textMsg.textContent == '' || textMsg.textContent == 'Max 80 chars long') {
+        textMsg.textContent = 'Max 80 chars long';
+        console.log('in if');
+    } else {
+        console.log('in else');
+        updateMsg();
+        thanksMsg.classList.remove('hidden');
+        textMsg.style.display = 'none';
+        textArea.style.display = 'flex';
+        textArea.style.justifyContent = 'center';
+        textArea.style.alignItems = 'center';
+    }
+});
 
 document.addEventListener('click', (e) => {
     if (e.target !== edit && e.target !== textArea) {
         textArea.blur();
         textArea.removeAttribute('contenteditable', 'true');
-        if (textArea.textContent === '')
-            textArea.textContent = 'Max 80 chars long';
+        if (textMsg.textContent === '')
+            textMsg.textContent = 'Max 80 chars long';
         edit.style.color = 'var(--color-1)';
     }
 })
 let userData;
 
-fetchUserData();
+// fetchUserData();
 async function fetchUserData() {
     await fetch('http://localhost:8080/graphData')
         .then(response => response.json())
@@ -44,13 +55,15 @@ async function fetchUserData() {
 }
 
 
-
-
+let chart, data, options;
+var chartContainer = document.getElementById('chart_div').parentElement;
+let containerWidth, containerHeight;
+containerWidth = chartContainer.offsetWidth;
+containerHeight = chartContainer.offsetHeight;
 google.charts.load('current', { packages: ['corechart', 'line'] });
 
 function drawBasic() {
-
-    var data = new google.visualization.DataTable();
+    data = new google.visualization.DataTable();
     data.addColumn('number', 'X');
     data.addColumn('number', 'Score');
 
@@ -58,11 +71,10 @@ function drawBasic() {
     for (let i = 0; i < userData.score.length; i++) {
         dataArray.push([i + 1, parseInt(userData.score[i].wpm)]);
     }
-    console.log(dataArray);
 
     data.addRows(dataArray);
 
-    var options = {
+    options = {
         hAxis: {
             title: '',
             gridlines: { color: 'transparent' },
@@ -74,25 +86,43 @@ function drawBasic() {
             baselineColor: 'transparent',
             titleTextStyle: {
                 fontSize: 20,
-                color: "rgb(126, 87, 194)"
-            }
+                color: 'rgb(126, 87, 194)',
+            },
         },
         backgroundColor: 'transparent', // Set background color to transparent
         chartArea: {
-            backgroundColor: 'transparent' // Set chart area background color to transparent
+            backgroundColor: 'transparent', // Set chart area background color to transparent
         },
         colors: ['yellow'], // Set line color to yellow
-        width: '100%',
-        height: '100%',
-        legend: 'none'
+        width: containerWidth,
+        height: containerHeight,
+        legend: 'none',
     };
 
-    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
 
     chart.draw(data, options);
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    fetchUserData();
+});
 
+window.addEventListener('resize', () => {
+    window.location.reload();
+    handleChartResize();
+    fetchUserData();
+})
+
+function handleChartResize() {
+    console.log('chart');
+
+    containerWidth = chartContainer.offsetWidth;
+    containerHeight = chartContainer.offsetHeight;
+
+    // google.charts.setOnLoadCallback(drawBasic);
+}
 
 google.charts.load("current", { packages: ["calendar"] });
 google.charts.setOnLoadCallback(drawChart);
@@ -102,35 +132,81 @@ function drawChart() {
     dataTable.addColumn({ type: 'date', id: 'Date' });
     dataTable.addColumn({ type: 'number', id: 'Won/Loss' });
     dataTable.addRows([
-        [new Date(2023, 6, 5), 1],
-        [new Date(2023, 3, 14), 2],
-        [new Date(2023, 3, 15), 3],
-        [new Date(2023, 3, 16), 4],
-        [new Date(2023, 3, 17), 5],
+        [new Date(2012, 3, 13), 1],
+        [new Date(2012, 3, 14), 2],
+        [new Date(2012, 3, 15), 3],
+        [new Date(2012, 3, 16), 4],
+        [new Date(2012, 3, 17), 5],
     ]);
 
     var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
 
     var options = {
+        title: "",
+        height: 500,
+        width: 2000,
+        legend: 'none',
+        noDataPattern: {
+            backgroundColor: 'transparent',
+            color: '#050a18',
+        },
+        colorAxis: { minValue: 0, colors: ['#FFFFE0', '#FFD700'] },
+
         calendar: {
+            underMonthSpace: 15,
+            dayOfWeekRightSpace: 15,
+            unusedMonthOutlineColor: {
+                stroke: '#ccc',
+                strokeOpacity: 0.5,
+                strokeWidth: 0.5
+            },
             cellColor: {
-                stroke: 'white',
+                stroke: '#1e2345',
+                strokeOpacity: 0.5,
+                strokeWidth: 1,
+                color: 'black',
+            },
+            focusedCellColor: {
+                stroke: 'yellow',
+                strokeOpacity: 0.8,
+                strokeWidth: 1,
+
+            },
+            monthOutlineColor: {
+                stroke: 'yellow',
                 strokeOpacity: 0.5,
                 strokeWidth: 1
             },
-            cellSize: 18,
-            dayOfWeekLabel: {
+            cellSize: 20,
+            yearLabel: {
                 fontName: 'Times-Roman',
-                fontSize: 12,
-                color: 'white',
-                bold: false,
-                italic: false
+                fontSize: 32,
+                color: 'transparent',
+                bold: true,
+                italic: true
             },
-            dayOfWeekRightSpace: 7,
-            underMonthSpace: 12 ,
-            numMonths: 6
         }
     };
-
     chart.draw(dataTable, options);
+}
+
+async function updateMsg() {
+    console.log('heelo')
+    try {
+        const response = await fetch('http://localhost:8080/updateMsg', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                Msg: textMsg.textContent.replace(/\s+/g, " ").trim()
+            }),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to update msg');
+        }
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 }
