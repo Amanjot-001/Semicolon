@@ -6,6 +6,7 @@ const thanksMsg = document.querySelector('.thanks-msg');
 const nameEditBtn = document.querySelector('.name-edit-btn');
 const userName = document.querySelector('.name span');
 let initUserName = '';
+let initMsg = '';
 
 nameEditBtn.addEventListener('click', () => {
     userName.textContent = userName.textContent.replace(/\s+/g, " ").trim();
@@ -31,6 +32,15 @@ nameEditBtn.addEventListener('click', () => {
             }, 2000);
             return;
         }
+        else if (userName.textContent.length > 20) {
+            userName.textContent = 'Limit exceeded > 20';
+            nameEditBtn.style.display = 'none';
+            setTimeout(() => {
+                userName.textContent = initUserName;
+                nameEditBtn.style.display = 'initial';
+            }, 2000);
+            return;
+        }
 
         updateName();
 
@@ -47,6 +57,17 @@ nameEditBtn.addEventListener('click', () => {
 userName.addEventListener('paste', (event) => {
     event.preventDefault();
     const text = event.clipboardData.getData('text/plain');
+    if (text.length > 20){
+        userName.textContent = 'Limit exceeded > 20';
+        nameEditBtn.style.display = 'none';
+        userName.blur();
+        setTimeout(() => {
+            userName.textContent = initUserName;
+            nameEditBtn.style.display = 'initial';
+            userName.focus();
+        }, 2000);
+        return;
+    }
     userName.textContent = text;
 });
 
@@ -61,6 +82,22 @@ userName.addEventListener('focus', () => {
     selection.addRange(range);
 });
 
+userName.addEventListener('input', () => {
+    const maxLength = 20;
+    let currentText = userName.textContent;
+    if (userName.textContent.length > maxLength) {
+        currentText = currentText.slice(0, maxLength);
+        userName.textContent = 'Limit exceeded > 20';
+        nameEditBtn.style.display = 'none';
+        userName.blur();
+        setTimeout(() => {
+            userName.textContent = currentText;
+            nameEditBtn.style.display = 'initial';
+            userName.focus();
+        }, 2000);
+    }
+})
+
 edit.addEventListener('click', () => {
     if (!thanksMsg.classList.contains('hidden')) {
         thanksMsg.classList.add('hidden');
@@ -69,12 +106,12 @@ edit.addEventListener('click', () => {
         thanksMsg.querySelector('p').textContent = 'Thank You for your Feedback!';
     }
     textMsg.textContent = textMsg.textContent.replace(/\s+/g, " ").trim();
-    edit.style.color = 'yellow'
+    edit.style.color = 'yellow';
+    initMsg = textMsg.textContent;
     textMsg.setAttribute('contenteditable', 'true');
     textMsg.focus();
     if (textMsg.textContent === 'Max 80 chars long')
         textMsg.textContent = '';
-
 })
 
 submit.addEventListener('click', () => {
@@ -115,6 +152,23 @@ submit.addEventListener('click', () => {
 textMsg.addEventListener('paste', (event) => {
     event.preventDefault();
     const text = event.clipboardData.getData('text/plain');
+    if (text.length > 80){
+        thanksMsg.classList.remove('hidden');
+        thanksMsg.querySelector('p').textContent = 'Oops! More than 80 chars';
+        textMsg.style.display = 'none';
+        textArea.style.display = 'flex';
+        textArea.style.justifyContent = 'center';
+        textArea.style.alignItems = 'center';
+        textMsg.blur();
+        setTimeout(() => {
+            textMsg.textContent = initMsg;
+            thanksMsg.classList.add('hidden');
+            textMsg.style.display = 'initial';
+            textArea.style.display = 'initial';
+            textMsg.focus();
+        }, 2000);
+        return;
+    }
     textMsg.textContent = text;
 });
 
@@ -128,6 +182,28 @@ textMsg.addEventListener('focus', () => {
     selection.removeAllRanges();
     selection.addRange(range);
 });
+
+textMsg.addEventListener('input', () => {
+    const maxLength = 80;
+    let currentText = textMsg.textContent;
+    if (textMsg.textContent.length > maxLength) {
+        currentText = currentText.slice(0, maxLength);
+        thanksMsg.classList.remove('hidden');
+        thanksMsg.querySelector('p').textContent = 'Oops! More than 80 chars';
+        textMsg.style.display = 'none';
+        textArea.style.display = 'flex';
+        textArea.style.justifyContent = 'center';
+        textArea.style.alignItems = 'center';
+        textMsg.blur();
+        setTimeout(() => {
+            textMsg.textContent = currentText;
+            thanksMsg.classList.add('hidden');
+            textMsg.style.display = 'initial';
+            textArea.style.display = 'initial';
+            textMsg.focus();
+        }, 2000);
+    }
+})
 
 document.addEventListener('click', (e) => {
     if (e.target !== edit && e.target !== textArea && e.target !== textMsg) {
