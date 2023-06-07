@@ -89,7 +89,7 @@ const userSchema = new mongoose.Schema({
       },
       date: {
         type: String,
-        default: moment().format('MMM Do YY')
+        default: moment().format('YYYY MM DD')
       }
     }
   ],

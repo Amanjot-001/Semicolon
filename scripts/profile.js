@@ -155,6 +155,7 @@ async function fetchUserData() {
         .then(data => {
             userData = data;
             google.charts.setOnLoadCallback(drawBasic);
+            google.charts.setOnLoadCallback(drawChart);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -196,23 +197,22 @@ function drawBasic() {
                 color: 'rgb(126, 87, 194)',
             },
         },
-        backgroundColor: 'transparent', // Set background color to transparent
+        backgroundColor: 'transparent',
         chartArea: {
-            backgroundColor: 'transparent', // Set chart area background color to transparent
+            backgroundColor: 'transparent',
         },
-        colors: ['yellow'], // Set line color to yellow
+        colors: ['yellow'],
         width: containerWidth,
         height: containerHeight,
         legend: 'none',
     };
 
     chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-
-
     chart.draw(data, options);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('fetch)');
     fetchUserData();
 });
 
@@ -224,34 +224,56 @@ window.addEventListener('resize', () => {
 
 function handleChartResize() {
     console.log('chart');
-
     containerWidth = chartContainer.offsetWidth;
     containerHeight = chartContainer.offsetHeight;
-
     // google.charts.setOnLoadCallback(drawBasic);
 }
 
+
 google.charts.load("current", { packages: ["calendar"] });
-google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
     var dataTable = new google.visualization.DataTable();
     dataTable.addColumn({ type: 'date', id: 'Date' });
     dataTable.addColumn({ type: 'number', id: 'Won/Loss' });
-    dataTable.addRows([
-        [new Date(2012, 3, 13), 1],
-        [new Date(2012, 3, 14), 2],
-        [new Date(2012, 3, 15), 3],
-        [new Date(2012, 3, 16), 4],
-        [new Date(2012, 3, 17), 5],
-    ]);
+
+    const hashtable = {};
+    function addToHashtable(date, data) {
+        if (hashtable[date]) {
+            hashtable[date] += data;
+        } else {
+            hashtable[date] = data;
+        }
+    }
+
+    for (let i = 0; i < userData.score.length; i++) {
+        const date = userData.score[i].date;
+        addToHashtable(date, 1);
+    }
+
+    console.log(hashtable);
+    const hashArray = Object.entries(hashtable);
+    console.log(hashArray);
+
+    let dataArray = [];
+    for (let i = 0; i < hashArray.length; i++) {
+        let date = hashArray[i][0];
+        let freq = hashArray[i][1];
+        console.log(date);
+        let dateArray = date.split(" ");
+        console.log(dateArray);
+        dataArray.push([new Date(parseInt(dateArray[0]), parseInt(dateArray[1]) - 1, parseInt(dateArray[2])), freq]);
+    }
+
+    console.log(dataArray);
+
+    dataTable.addRows(dataArray);
 
     var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
 
     var options = {
         title: "",
         height: 500,
-        width: 2000,
         legend: 'none',
         noDataPattern: {
             backgroundColor: 'transparent',
@@ -279,12 +301,13 @@ function drawChart() {
                 strokeWidth: 1,
 
             },
+
             monthOutlineColor: {
                 stroke: 'yellow',
                 strokeOpacity: 0.5,
                 strokeWidth: 1
             },
-            cellSize: 20,
+            cellSize: 18,
             yearLabel: {
                 fontName: 'Times-Roman',
                 fontSize: 32,
@@ -296,6 +319,7 @@ function drawChart() {
     };
     chart.draw(dataTable, options);
 }
+console.log(document.cookie);
 
 async function updateMsg() {
     console.log('heelo')
