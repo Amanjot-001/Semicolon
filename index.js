@@ -280,6 +280,18 @@ app.post('/updateName', async (req, res) => {
   }
 });
 
+app.post('/updatePhoto', async (req, res) => {
+  try {
+    const photoNo = req.body.PhotoNumber;
+    userData.photoNumber = photoNo;
+    await userData.save();
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error updating name');
+  }
+});
+
 app.get('/userfind', async (req, res) => {
   const user = await User.find({});
   // await User.deleteMany({});

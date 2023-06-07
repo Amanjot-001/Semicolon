@@ -5,8 +5,33 @@ const submit = document.querySelector('.submit');
 const thanksMsg = document.querySelector('.thanks-msg');
 const nameEditBtn = document.querySelector('.name-edit-btn');
 const userName = document.querySelector('.name span');
+const popup = document.querySelector('.popup');
+const popupWraper = document.querySelector('.popup-wraper')
+const photoEditBtn = document.querySelector('.photo i');
+const userPhotos = document.querySelectorAll('.photo-select img');
+const userMainPhoto = document.querySelector('.photo img')
 let initUserName = '';
 let initMsg = '';
+let value = 1;
+
+photoEditBtn.addEventListener('click', () => {
+    popup.style.display = 'initial';
+})
+
+popupWraper.addEventListener('click', (event) => {
+    if (!event.target.classList.contains('photo-select'))
+        popup.style.display = 'none';
+})
+
+userPhotos.forEach((photo) => {
+    photo.addEventListener('click', (event) => {
+        value = event.target.dataset.value;
+        // console.log(value);
+        updatePhoto();
+        const selectedImageSrc = event.target.getAttribute('src');
+        userMainPhoto.setAttribute('src', selectedImageSrc);
+    });
+});
 
 nameEditBtn.addEventListener('click', () => {
     userName.textContent = userName.textContent.replace(/\s+/g, " ").trim();
@@ -57,7 +82,7 @@ nameEditBtn.addEventListener('click', () => {
 userName.addEventListener('paste', (event) => {
     event.preventDefault();
     const text = event.clipboardData.getData('text/plain');
-    if (text.length > 20){
+    if (text.length > 20) {
         userName.textContent = 'Limit exceeded > 20';
         nameEditBtn.style.display = 'none';
         userName.blur();
@@ -152,7 +177,7 @@ submit.addEventListener('click', () => {
 textMsg.addEventListener('paste', (event) => {
     event.preventDefault();
     const text = event.clipboardData.getData('text/plain');
-    if (text.length > 80){
+    if (text.length > 80) {
         thanksMsg.classList.remove('hidden');
         thanksMsg.querySelector('p').textContent = 'Oops! More than 80 chars';
         textMsg.style.display = 'none';
@@ -432,6 +457,27 @@ async function updateName() {
         });
         if (!response.ok) {
             throw new Error('Failed to update name');
+        }
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+async function updatePhoto() {
+    console.log('photo update')
+    try {
+        const response = await fetch('http://localhost:8080/updatePhoto', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                PhotoNumber: value
+            }),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to update photo');
         }
     } catch (error) {
         console.error(error);
