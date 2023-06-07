@@ -159,6 +159,12 @@ nav {
     align-items: start;
 }
 
+.photo img {
+    width: 7rem;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
 .photo i {
     color: var(--color-1);
     font-size: 1.2rem;
@@ -376,11 +382,44 @@ nav {
     position: relative;
 }
 
-#calendar_basic svg{
+#calendar_basic svg {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+/* popup */
+
+.popup {
+    display: none;
+}
+
+.popup-wraper {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.photo-select {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* background: #323437; */
+    border-radius: 10px;
+}
+
+.photo-select img {
+    width: 8rem;
+    border-radius: 50%;
+    cursor: pointer;
 }
