@@ -23,11 +23,11 @@ window.addEventListener('mousemove', (e) => {
 
 borderLinks.forEach(link => {
     link.addEventListener('mouseover', () => {
-        link.style.color = 'white';
+        link.style.color = 'hover-color';
         mouseCaret.classList.remove('mouseCaret');
     })
     link.addEventListener('mouseleave', () => {
-        link.style.color = 'rgba(116,112,131)';
+        link.style.color = 'var(--main-text-color)';
         mouseCaret.classList.add('mouseCaret');
     })
 })
