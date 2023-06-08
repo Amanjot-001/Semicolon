@@ -8,7 +8,6 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const moment = require('moment');
-const session = require('express-session');
 const cookieParser = require('cookie-parser');
 let data = '';
 let userData = '';
@@ -28,11 +27,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(session({
-  secret: '12121212',
-  resave: false,
-  saveUninitialized: false
-}));
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs');
@@ -122,8 +116,9 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   sessionId = req.cookies.userId;
+  if (data == '') await fetchData();
   next();
 })
 
