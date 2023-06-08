@@ -294,7 +294,6 @@ main>article[data-status="becoming-active-from-after"] {
 .left-btn:hover {
     background-color: var(--move-btns-hover-color);
     cursor: pointer;
-    transition: background-color 300ms ease;
 }
 
 .move-btns>div {
