@@ -11,9 +11,197 @@ const photoEditBtn = document.querySelector('.photo i');
 const userPhotos = document.querySelectorAll('.photo-select img');
 const userMainPhoto = document.querySelector('.photo img');
 const nav = document.querySelector('nav');
+const mouseCaret = document.querySelector('.mouseCaret');
+const navLinks = document.querySelectorAll('nav .grow-link');
+const borderLinks = document.querySelectorAll('.border-link');
+const rank = document.querySelector('.rank');
+const bestScore = document.querySelector('.best-score');
+const completedTests = document.querySelector('.completed-tests');
+const joinedDate = document.querySelector('.joined-date');
+const UserName = document.querySelector('.username');
+const Name = document.querySelector('.name');
+const reviewHeading = document.querySelector('.heading strong');
+const graph = document.querySelector('.graph');
+const map = document.querySelector('.map');
+
 let initUserName = '';
 let initMsg = '';
 let value = 1;
+
+document.addEventListener('DOMContentLoaded', function () {
+    var defaultTheme = 'theme1';
+    document.documentElement.classList.add(defaultTheme);
+});
+
+window.addEventListener('mousemove', (e) => {
+    mouseCaret.style.top = e.pageY + 'px';
+    mouseCaret.style.left = e.pageX + 'px';
+})
+
+navLinks.forEach(link => {
+    link.addEventListener('mouseover', () => {
+        mouseCaret.classList.add('caret-grow');
+        // link.classList.add('hovered-link');
+    })
+    link.addEventListener('mouseleave', () => {
+        mouseCaret.classList.remove('caret-grow');
+        // link.classList.remove('hovered-link');
+    })
+})
+
+borderLinks.forEach(link => {
+    link.addEventListener('mouseover', () => {
+        mouseCaret.classList.remove('mouseCaret');
+    })
+    link.addEventListener('mouseleave', () => {
+        mouseCaret.classList.add('mouseCaret');
+    })
+})
+
+rank.addEventListener('mouseover', () => {
+    mouseCaret.classList.add('caret-grow');
+})
+rank.addEventListener('mouseleave', () => {
+    mouseCaret.classList.remove('caret-grow');
+})
+
+bestScore.addEventListener('mouseover', () => {
+    mouseCaret.classList.add('caret-grow');
+})
+bestScore.addEventListener('mouseleave', () => {
+    mouseCaret.classList.remove('caret-grow');
+})
+
+completedTests.addEventListener('mouseover', () => {
+    mouseCaret.classList.add('caret-grow');
+})
+completedTests.addEventListener('mouseleave', () => {
+    mouseCaret.classList.remove('caret-grow');
+})
+
+joinedDate.addEventListener('mouseover', () => {
+    mouseCaret.classList.add('caret-grow');
+})
+joinedDate.addEventListener('mouseleave', () => {
+    mouseCaret.classList.remove('caret-grow');
+})
+
+UserName.addEventListener('mouseover', () => {
+    mouseCaret.classList.add('caret-grow');
+})
+UserName.addEventListener('mouseleave', () => {
+    mouseCaret.classList.remove('caret-grow');
+})
+
+Name.addEventListener('mouseover', () => {
+    mouseCaret.classList.remove('mouseCaret');
+})
+Name.addEventListener('mouseleave', () => {
+    mouseCaret.classList.add('mouseCaret');
+})
+
+photoEditBtn.addEventListener('mouseover', () => {
+    mouseCaret.classList.remove('mouseCaret');
+})
+photoEditBtn.addEventListener('mouseleave', () => {
+    mouseCaret.classList.add('mouseCaret');
+})
+
+reviewHeading.addEventListener('mouseover', () => {
+    mouseCaret.classList.add('caret-grow');
+})
+reviewHeading.addEventListener('mouseleave', () => {
+    mouseCaret.classList.remove('caret-grow');
+})
+
+textArea.addEventListener('mouseover', () => {
+    mouseCaret.classList.remove('mouseCaret');
+})
+textArea.addEventListener('mouseleave', () => {
+    mouseCaret.classList.add('mouseCaret');
+})
+
+edit.addEventListener('mouseover', () => {
+    mouseCaret.classList.remove('mouseCaret');
+})
+edit.addEventListener('mouseleave', () => {
+    mouseCaret.classList.add('mouseCaret');
+})
+
+submit.addEventListener('mouseover', () => {
+    mouseCaret.classList.remove('mouseCaret');
+})
+submit.addEventListener('mouseleave', () => {
+    mouseCaret.classList.add('mouseCaret');
+})
+
+graph.addEventListener('mouseover', () => {
+    mouseCaret.classList.remove('mouseCaret');
+})
+graph.addEventListener('mouseleave', () => {
+    mouseCaret.classList.add('mouseCaret');
+})
+
+map.addEventListener('mouseover', () => {
+    mouseCaret.classList.remove('mouseCaret');
+})
+map.addEventListener('mouseleave', () => {
+    mouseCaret.classList.add('mouseCaret');
+})
+
+document.addEventListener('click', (event) => {
+    const clickedElement = event.target;
+    if (clickedElement.tagName.toLowerCase() !== 'button' &&
+        clickedElement.tagName.toLowerCase() !== 'a' &&
+        clickedElement.tagName.toLowerCase() !== 'p' &&
+        clickedElement.tagName.toLowerCase() !== 'i' &&
+        clickedElement.tagName.toLowerCase() !== 'span' &&
+        clickedElement.tagName.toLowerCase() !== 'img' &&
+        !clickedElement.closest('.graph') &&
+        !clickedElement.closest('.map') &&
+        !clickedElement.closest('.text-area') &&
+        !clickedElement.closest('p') &&
+        !clickedElement.closest('.rank') &&
+        !clickedElement.closest('.best-score') &&
+        !clickedElement.closest('.completed-tests') &&
+        !clickedElement.closest('.joined-date') &&
+        !clickedElement.closest('.username') &&
+        !clickedElement.closest('.name') &&
+        !clickedElement.closest('.popup') &&
+        clickedElement !== edit &&
+        clickedElement !== submit) {
+
+        if (!mouseCaret.classList.contains('clicked'))
+            applyNextColorTheme();
+    }
+
+    if (clickedElement.tagName.toLowerCase() !== 'button' &&
+        clickedElement.tagName.toLowerCase() !== 'a' &&
+        clickedElement.tagName.toLowerCase() !== 'p' &&
+        clickedElement.tagName.toLowerCase() !== 'i' &&
+        clickedElement.tagName.toLowerCase() !== 'span' &&
+        clickedElement.tagName.toLowerCase() !== 'img' &&
+        !clickedElement.closest('.graph') &&
+        !clickedElement.closest('.map') &&
+        !clickedElement.closest('.text-area') &&
+        !clickedElement.closest('p') &&
+        !clickedElement.closest('.rank') &&
+        !clickedElement.closest('.best-score') &&
+        !clickedElement.closest('.completed-tests') &&
+        !clickedElement.closest('.joined-date') &&
+        !clickedElement.closest('.username') &&
+        !clickedElement.closest('.name') &&
+        !clickedElement.closest('.popup') &&
+        clickedElement !== edit &&
+        clickedElement !== submit) {
+
+        mouseCaret.classList.add('clicked');
+        setTimeout(function () {
+            mouseCaret.classList.remove('clicked');
+        }, 800);
+    }
+});
+
 
 photoEditBtn.addEventListener('click', () => {
     popup.style.display = 'initial';
@@ -237,17 +425,34 @@ document.addEventListener('click', (e) => {
         textMsg.removeAttribute('contenteditable', 'true');
         if (textMsg.textContent === '')
             textMsg.textContent = 'Max 80 chars long';
-        edit.style.color = 'var(--color-1)';
+        edit.style.color = 'var(--main-text-color)';
     }
 
     if (e.target !== nameEditBtn && e.target !== userName) {
         userName.blur();
         userName.removeAttribute('contenteditable', 'true');
-        nameEditBtn.style.color = 'var(--color-1)';
+        nameEditBtn.style.color = 'var(--main-text-color)';
         nameEditBtn.classList.add('fa-pen-to-square');
         nameEditBtn.classList.remove('fa-check');
     }
 })
+
+function applyNextColorTheme() {
+    var themes = ['theme1', 'theme2', 'theme3'];
+    var currentTheme = getAppliedTheme();
+    document.documentElement.classList.remove(currentTheme);
+    var currentIndex = themes.indexOf(currentTheme);
+    var nextIndex = (currentIndex + 1) % themes.length;
+    var nextTheme = themes[nextIndex];
+    document.documentElement.classList.add(nextTheme);
+}
+
+function getAppliedTheme() {
+    var themes = ['theme1', 'theme2', 'theme3'];
+    var appliedTheme = themes.find(theme => document.documentElement.classList.contains(theme));
+    return appliedTheme;
+}
+
 let userData;
 
 // fetchUserData();
@@ -377,6 +582,7 @@ function drawChart() {
         title: "",
         legend: 'none',
         width: '1100',
+        height: '450',
         noDataPattern: {
             backgroundColor: 'transparent',
             color: '#050a18',
