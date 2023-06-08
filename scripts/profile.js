@@ -9,7 +9,8 @@ const popup = document.querySelector('.popup');
 const popupWraper = document.querySelector('.popup-wraper')
 const photoEditBtn = document.querySelector('.photo i');
 const userPhotos = document.querySelectorAll('.photo-select img');
-const userMainPhoto = document.querySelector('.photo img')
+const userMainPhoto = document.querySelector('.photo img');
+const nav = document.querySelector('nav');
 let initUserName = '';
 let initMsg = '';
 let value = 1;
@@ -144,7 +145,7 @@ submit.addEventListener('click', () => {
     textMsg.blur();
     textMsg.removeAttribute('contenteditable', 'true');
     if (!thanksMsg.classList.contains('hidden')) {
-        console.log('yo');
+        // console.log('yo');
         thanksMsg.classList.add('hidden');
         thanksMsg.querySelector('p').textContent = 'Thank You for your Feedback!';
         textArea.style.display = 'initial';
@@ -374,8 +375,8 @@ function drawChart() {
 
     var options = {
         title: "",
-        height: 500,
         legend: 'none',
+        width: '1100',
         noDataPattern: {
             backgroundColor: 'transparent',
             color: '#050a18',
@@ -420,10 +421,10 @@ function drawChart() {
     };
     chart.draw(dataTable, options);
 }
-console.log(document.cookie);
+// console.log(document.cookie);
 
 async function updateMsg() {
-    console.log('heelo')
+    // console.log('heelo')
     try {
         const response = await fetch('http://localhost:8080/updateMsg', {
             method: 'POST',
@@ -444,7 +445,7 @@ async function updateMsg() {
 }
 
 async function updateName() {
-    console.log('name update')
+    // console.log('name update')
     try {
         const response = await fetch('http://localhost:8080/updateName', {
             method: 'POST',
@@ -465,7 +466,7 @@ async function updateName() {
 }
 
 async function updatePhoto() {
-    console.log('photo update')
+    // console.log('photo update')
     try {
         const response = await fetch('http://localhost:8080/updatePhoto', {
             method: 'POST',
@@ -483,4 +484,14 @@ async function updatePhoto() {
         console.error(error);
         throw error;
     }
+}
+
+function handleNavToggle() {
+    nav.dataset.transitionable = 'true';
+    nav.dataset.toggled = nav.dataset.toggled === "true" ? "false" : "true";
+}
+
+window.matchMedia("(max-width: 800px)").onchange = e => {
+    nav.dataset.transitionable = "false";
+    nav.dataset.toggled = "false";
 }
