@@ -11,6 +11,10 @@ let scrollTopStop = false;
 let activeIndex = 0;
 let users;
 
+document.addEventListener('DOMContentLoaded', function () {
+    var defaultTheme = 'theme1';
+    document.documentElement.classList.add(defaultTheme);
+});
 
 window.addEventListener('mousemove', (e) => {
     mouseCaret.style.top = e.pageY + 'px';
@@ -158,11 +162,6 @@ window.matchMedia("(max-width: 800px)").onchange = e => {
     nav.dataset.transitionable = "false";
     nav.dataset.toggled = "false";
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    var defaultTheme = 'theme1';
-    document.documentElement.classList.add(defaultTheme);
-});
 
 document.addEventListener('click', (event) => {
     const clickedElement = event.target;

@@ -1,4 +1,89 @@
 const nav = document.querySelector('nav');
+const mouseCaret = document.querySelector('.mouseCaret');
+const navLinks = document.querySelectorAll('nav .grow-link');
+const borderLinks = document.querySelectorAll('.border-link');
+const sub = document.querySelector('.sub');
+const Sem = document.querySelector('.sem');
+const semDropdownToggle = document.querySelector('.sem-dropdown-toggle');
+const Unit = document.querySelector('.unit');
+const unitDropdownToggle = document.querySelector('.unit-dropdown-toggle');
+const subjectName = document.querySelectorAll('.subject-select div p');
+
+
+window.addEventListener('mousemove', (e) => {
+  mouseCaret.style.top = e.pageY + 'px';
+  mouseCaret.style.left = e.pageX + 'px';
+})
+
+navLinks.forEach(link => {
+  link.addEventListener('mouseover', () => {
+    mouseCaret.classList.add('caret-grow');
+    link.classList.add('hovered-link');
+  })
+  link.addEventListener('mouseleave', () => {
+    mouseCaret.classList.remove('caret-grow');
+    link.classList.remove('hovered-link');
+  })
+})
+
+borderLinks.forEach(link => {
+  link.addEventListener('mouseover', () => {
+    mouseCaret.classList.remove('mouseCaret');
+  })
+  link.addEventListener('mouseleave', () => {
+    mouseCaret.classList.add('mouseCaret');
+  })
+})
+
+sub.addEventListener('mouseover', () => {
+  mouseCaret.classList.add('caret-grow');
+  sub.classList.add('hovered-link');
+})
+sub.addEventListener('mouseleave', () => {
+  mouseCaret.classList.remove('caret-grow');
+  sub.classList.remove('hovered-link');
+})
+
+Sem.addEventListener('mouseover', () => {
+  mouseCaret.classList.add('caret-grow');
+  Sem.classList.add('hovered-link');
+})
+Sem.addEventListener('mouseleave', () => {
+  mouseCaret.classList.remove('caret-grow');
+  Sem.classList.remove('hovered-link');
+})
+
+semDropdownToggle.addEventListener('mouseover', () => {
+  mouseCaret.classList.remove('mouseCaret');
+})
+semDropdownToggle.addEventListener('mouseleave', () => {
+  mouseCaret.classList.add('mouseCaret');
+})
+
+Unit.addEventListener('mouseover', () => {
+  mouseCaret.classList.add('caret-grow');
+  Unit.classList.add('hovered-link');
+})
+Unit.addEventListener('mouseleave', () => {
+  mouseCaret.classList.remove('caret-grow');
+  Unit.classList.remove('hovered-link');
+})
+
+unitDropdownToggle.addEventListener('mouseover', () => {
+  mouseCaret.classList.remove('mouseCaret');
+})
+unitDropdownToggle.addEventListener('mouseleave', () => {
+  mouseCaret.classList.add('mouseCaret');
+})
+
+subjectName.forEach(subName => {
+  subName.addEventListener('mouseover', (event) => {
+    mouseCaret.classList.remove('mouseCaret');
+  })
+  subName.addEventListener('mouseleave', (event) => {
+    mouseCaret.classList.add('mouseCaret');
+  })
+})
 
 function semToggleDropdown() {
   var dropdownMenu = document.getElementById("semDropdownMenu");
@@ -14,6 +99,11 @@ function subToggleDropdown() {
   var dropdownMenu = document.getElementById("subDropdownMenu");
   dropdownMenu.style.display = dropdownMenu.style.display === "none" ? "block" : "none";
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  var defaultTheme = 'theme1';
+  document.documentElement.classList.add(defaultTheme);
+});
 
 document.addEventListener("click", function (event) {
   var semDropdownMenu = document.getElementById("semDropdownMenu");
@@ -34,6 +124,58 @@ document.addEventListener("click", function (event) {
   }
 });
 
+document.addEventListener('click', (event) => {
+  const clickedElement = event.target;
+  if (clickedElement.tagName.toLowerCase() !== 'button' &&
+    clickedElement.tagName.toLowerCase() !== 'a' &&
+    clickedElement.tagName.toLowerCase() !== 'li' &&
+    clickedElement.tagName.toLowerCase() !== 'p' &&
+    clickedElement.tagName.toLowerCase() !== 'i' &&
+    clickedElement.tagName.toLowerCase() !== 'span' &&
+    !clickedElement.classList.contains('sub') &&
+    !clickedElement.classList.contains('sem') &&
+    !clickedElement.classList.contains('unit') &&
+    !clickedElement.classList.contains('card') &&
+    !clickedElement.closest('.card')) {
+
+    if (!mouseCaret.classList.contains('clicked'))
+      applyNextColorTheme();
+  }
+
+  if (clickedElement.tagName.toLowerCase() !== 'button' &&
+    clickedElement.tagName.toLowerCase() !== 'a' &&
+    clickedElement.tagName.toLowerCase() !== 'li' &&
+    clickedElement.tagName.toLowerCase() !== 'p' &&
+    clickedElement.tagName.toLowerCase() !== 'i' &&
+    clickedElement.tagName.toLowerCase() !== 'span' &&
+    !clickedElement.classList.contains('sub') &&
+    !clickedElement.classList.contains('sem') &&
+    !clickedElement.classList.contains('unit') &&
+    !clickedElement.classList.contains('card') &&
+    !clickedElement.closest('.card')) {
+
+    mouseCaret.classList.add('clicked');
+    setTimeout(function () {
+      mouseCaret.classList.remove('clicked');
+    }, 800);
+  }
+});
+
+function applyNextColorTheme() {
+  var themes = ['theme1', 'theme2', 'theme3'];
+  var currentTheme = getAppliedTheme();
+  document.documentElement.classList.remove(currentTheme);
+  var currentIndex = themes.indexOf(currentTheme);
+  var nextIndex = (currentIndex + 1) % themes.length;
+  var nextTheme = themes[nextIndex];
+  document.documentElement.classList.add(nextTheme);
+}
+
+function getAppliedTheme() {
+  var themes = ['theme1', 'theme2', 'theme3'];
+  var appliedTheme = themes.find(theme => document.documentElement.classList.contains(theme));
+  return appliedTheme;
+}
 
 function handleNavToggle() {
   nav.dataset.transitionable = 'true';
@@ -56,8 +198,6 @@ async function fetchData() {
     console.error('There was a problem with the fetch operation:', error);
   }
 }
-
-
 
 
 const subjectMobile = document.querySelectorAll('.subject-select-mobile li');
@@ -153,93 +293,4 @@ topics.addEventListener('click', async (event) => {
     })
     window.location.href = 'http://localhost:8080/show';
   }
-})
-
-
-
-
-const mouseCaret = document.querySelector('.mouseCaret');
-const navLinks = document.querySelectorAll('nav .grow-link');
-const borderLinks = document.querySelectorAll('.border-link');
-const sub = document.querySelector('.sub');
-const Sem = document.querySelector('.sem');
-const semDropdownToggle = document.querySelector('.sem-dropdown-toggle');
-const Unit = document.querySelector('.unit');
-const unitDropdownToggle = document.querySelector('.unit-dropdown-toggle');
-const subjectName = document.querySelectorAll('.subject-select div p');
-
-
-window.addEventListener('mousemove', (e) => {
-  mouseCaret.style.top = e.pageY + 'px';
-  mouseCaret.style.left = e.pageX + 'px';
-})
-
-navLinks.forEach(link => {
-  link.addEventListener('mouseover', () => {
-    mouseCaret.classList.add('caret-grow');
-    link.classList.add('hovered-link');
-  })
-  link.addEventListener('mouseleave', () => {
-    mouseCaret.classList.remove('caret-grow');
-    link.classList.remove('hovered-link');
-  })
-})
-
-borderLinks.forEach(link => {
-  link.addEventListener('mouseover', () => {
-    mouseCaret.classList.remove('mouseCaret');
-  })
-  link.addEventListener('mouseleave', () => {
-    mouseCaret.classList.add('mouseCaret');
-  })
-})
-
-sub.addEventListener('mouseover', () => {
-  mouseCaret.classList.add('caret-grow');
-  sub.classList.add('hovered-link');
-})
-sub.addEventListener('mouseleave', () => {
-  mouseCaret.classList.remove('caret-grow');
-  sub.classList.remove('hovered-link');
-})
-
-Sem.addEventListener('mouseover', () => {
-  mouseCaret.classList.add('caret-grow');
-  Sem.classList.add('hovered-link');
-})
-Sem.addEventListener('mouseleave', () => {
-  mouseCaret.classList.remove('caret-grow');
-  Sem.classList.remove('hovered-link');
-})
-
-semDropdownToggle.addEventListener('mouseover', () => {
-  mouseCaret.classList.remove('mouseCaret');
-})
-semDropdownToggle.addEventListener('mouseleave', () => {
-  mouseCaret.classList.add('mouseCaret');
-})
-
-Unit.addEventListener('mouseover', () => {
-  mouseCaret.classList.add('caret-grow');
-  Unit.classList.add('hovered-link');
-})
-Unit.addEventListener('mouseleave', () => {
-  mouseCaret.classList.remove('caret-grow');
-  Unit.classList.remove('hovered-link');
-})
-
-unitDropdownToggle.addEventListener('mouseover', () => {
-  mouseCaret.classList.remove('mouseCaret');
-})
-unitDropdownToggle.addEventListener('mouseleave', () => {
-  mouseCaret.classList.add('mouseCaret');
-})
-
-subjectName.forEach(subName => {
-  subName.addEventListener('mouseover', (event) => {
-    mouseCaret.classList.remove('mouseCaret');
-  })
-  subName.addEventListener('mouseleave', (event) => {
-    mouseCaret.classList.add('mouseCaret');
-  })
 })
