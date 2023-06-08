@@ -48,7 +48,7 @@ leftBtn.forEach(btn => {
 
 navLinks.forEach(link => {
     link.addEventListener('mouseover', () => {
-        console.log('inside nav link');
+        // console.log('inside nav link');
         mouseCaret.classList.add('caret-grow');
         link.classList.add('hovered-link');
     })
@@ -59,8 +59,8 @@ navLinks.forEach(link => {
 })
 
 function handleMouseEnter() {
-    console.log("Mouse entered!");
-    console.log(activeIndex);
+    // console.log("Mouse entered!");
+    // console.log(activeIndex);
     const headingText = document.querySelector(`[data-index="${activeIndex}"] .heading .heading-text`);
     const rotatingIcon = document.querySelector(`[data-index="${activeIndex}"] .heading .rotating-icon img`);
     const headingFrontText = document.querySelector(`[data-index="${activeIndex}"] .heading-front-text`);
@@ -97,7 +97,7 @@ function scrollToBottom(start, end, headingText) {
         scrolled += 1.5;
         scrollTopStop = false;
         if (scrollDownStop || scrolled >= scrollEnd) {
-            console.log(scrolled);
+            // console.log(scrolled);
             clearInterval(scrollInterval);
         }
     }, 1);
@@ -177,7 +177,8 @@ document.addEventListener('click', (event) => {
         !clickedElement.classList.contains('image') &&
         clickedElement.tagName.toLowerCase() !== 'img' &&
         !clickedElement.classList.contains('left-btn') &&
-        !clickedElement.classList.contains('right-btn')) {
+        !clickedElement.classList.contains('right-btn') &&
+        !clickedElement.closest('.image')) {
 
         if (!mouseCaret.classList.contains('clicked'))
             applyNextColorTheme();
@@ -194,7 +195,8 @@ document.addEventListener('click', (event) => {
         !clickedElement.classList.contains('image') &&
         clickedElement.tagName.toLowerCase() !== 'img' &&
         !clickedElement.classList.contains('left-btn') &&
-        !clickedElement.classList.contains('right-btn')) {
+        !clickedElement.classList.contains('right-btn') &&
+        !clickedElement.closest('.image')) {
 
         mouseCaret.classList.add('clicked');
         setTimeout(function () {
@@ -220,43 +222,43 @@ function getAppliedTheme() {
 }
 
 fetchUsers();
-async function fetchUsers(){
-  fetch('http://localhost:8080/leadborad')
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-    users = data;
-    showLeaderBoard();
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+async function fetchUsers() {
+    fetch('http://localhost:8080/leadborad')
+        .then(response => response.json())
+        .then(data => {
+            // console.log(data);
+            users = data;
+            showLeaderBoard();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
-function showLeaderBoard(){
+function showLeaderBoard() {
     const list = document.querySelector('.top-list');
 
-    for(let i = 0; i < users.length && i < 10; i++){
+    for (let i = 0; i < users.length && i < 10; i++) {
 
-    const restList = document.createElement('div');
-    restList.classList.add('rest-list');
+        const restList = document.createElement('div');
+        restList.classList.add('rest-list');
 
-    const rankNo = document.createElement('div');
-    rankNo.classList.add('rank-no');
-    rankNo.textContent = `${i+1}`;
+        const rankNo = document.createElement('div');
+        rankNo.classList.add('rank-no');
+        rankNo.textContent = `${i + 1}`;
 
-    const rankName = document.createElement('div');
-    rankName.classList.add('rank-name');
-    rankName.textContent = `${users[i].username}`;
+        const rankName = document.createElement('div');
+        rankName.classList.add('rank-name');
+        rankName.textContent = `${users[i].username}`;
 
-    const rankSpeed = document.createElement('div');
-    rankSpeed.classList.add('rank-speed');
-    rankSpeed.textContent  = `${users[i].bestScore}`;
+        const rankSpeed = document.createElement('div');
+        rankSpeed.classList.add('rank-speed');
+        rankSpeed.textContent = `${users[i].bestScore}`;
 
-    restList.appendChild(rankNo);
-    restList.appendChild(rankName);
-    restList.appendChild(rankSpeed);
+        restList.appendChild(rankNo);
+        restList.appendChild(rankName);
+        restList.appendChild(rankSpeed);
 
-    list.appendChild(restList);
+        list.appendChild(restList);
     }
 }
