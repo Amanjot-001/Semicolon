@@ -10,6 +10,8 @@ const bcrypt = require('bcrypt');
 const moment = require('moment');
 const cookieParser = require('cookie-parser');
 let data = '';
+let rdata = '';
+let radata = '';
 let userData = '';
 let sessionId = '';
 let topicIndex = 0, subjectIndex = 0, unitIndex = 0, content;
@@ -116,6 +118,16 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+const Random = new mongoose.Schema({
+  data: [
+    {
+      content: String
+    },
+  ]
+})
+
+const RandomData = mongoose.model('RandomData', Random);
+
 app.use(async (req, res, next) => {
   sessionId = req.cookies.userId;
   if (data == '') await fetchData();
@@ -124,6 +136,7 @@ app.use(async (req, res, next) => {
 
 async function fetchData() {
   data = await Sem1Notes.find({});
+  radata = await RandomData.find({});
 }
 
 app.get('/dog', async (req, res) => {
@@ -135,6 +148,8 @@ app.get('/read', async (req, res) => {
 })
 
 app.get('/test', (req, res) => {
+  const randomNumber = Math.floor(Math.random() * 15);
+  content = radata[0].data[randomNumber].content;
   res.render('typing', { content, sessionId });
 })
 
