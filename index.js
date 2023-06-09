@@ -133,6 +133,10 @@ app.use((req, res, next) => {
   next();
 })
 
+app.get('/dog', async (req, res) => {
+  res.json(data);
+})
+
 app.post('/everything', async (req, res) => {
   try {
     if (data == '') {
