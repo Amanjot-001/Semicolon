@@ -52,7 +52,6 @@ leftBtn.forEach(btn => {
 
 navLinks.forEach(link => {
     link.addEventListener('mouseover', () => {
-        // console.log('inside nav link');
         mouseCaret.classList.add('caret-grow');
         link.classList.add('hovered-link');
     })
@@ -63,8 +62,6 @@ navLinks.forEach(link => {
 })
 
 function handleMouseEnter() {
-    // console.log("Mouse entered!");
-    // console.log(activeIndex);
     const headingText = document.querySelector(`[data-index="${activeIndex}"] .heading .heading-text`);
     const rotatingIcon = document.querySelector(`[data-index="${activeIndex}"] .heading .rotating-icon img`);
     const headingFrontText = document.querySelector(`[data-index="${activeIndex}"] .heading-front-text`);
@@ -101,7 +98,6 @@ function scrollToBottom(start, end, headingText) {
         scrolled += 1.5;
         scrollTopStop = false;
         if (scrollDownStop || scrolled >= scrollEnd) {
-            // console.log(scrolled);
             clearInterval(scrollInterval);
         }
     }, 1);
@@ -225,7 +221,6 @@ async function fetchUsers() {
     fetch('http://localhost:8080/leadborad')
         .then(response => response.json())
         .then(data => {
-            // console.log(data);
             users = data;
             showLeaderBoard();
         })

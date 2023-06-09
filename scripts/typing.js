@@ -59,9 +59,7 @@ const capsMsg = document.querySelector('.caps-lock>p>span')
 
 const width = window.innerWidth || document.documentElement.clientWidth;
 const height = typingArea.getBoundingClientRect().height;
-// console.log(height);
 maxLines = Math.floor((height - 35) / 36) - 3;
-// console.log(maxLines);
 
 document.addEventListener('DOMContentLoaded', function () {
     var defaultTheme = 'theme1';
@@ -88,7 +86,6 @@ window.addEventListener('resize', () => {
     location.reload();
 })
 
-// console.log(width);
 input.addEventListener("keyup", function (event) {
     if (event.getModifierState("CapsLock")) {
         capsLockIndicator.style.visibility = 'visible';
@@ -255,13 +252,13 @@ let firstWordTop = document.querySelector(".span0").getBoundingClientRect().top;
 
 input.addEventListener("keydown", (e) => {
     if (e.ctrlKey && e.key === "Backspace") {
-        e.preventDefault(); // Prevent the default behavior of the key combination
+        e.preventDefault();
         return;
     }
     let ptr = input.value;
     if (ptr.length < 1) {
         return;
-    } //if no character is left
+    }
 
     if (e.key === "Backspace") {
         let once = true;
@@ -269,7 +266,6 @@ input.addEventListener("keydown", (e) => {
         let index = document.querySelector(
             `p.given-text span.span${ptr.length - 1}`
         );
-        // remove notTyped class from all chars till the place where space was entered
         while (index.classList.contains("notTyped")) {
             if (once) {
                 let afterIndex = document.querySelector(
@@ -299,7 +295,6 @@ input.addEventListener("keydown", (e) => {
             flag = true;
         }
         if (flag) {
-            // only if above loop ran
             input.value = ptr;
             input.value += originalString[ptr.length - 1];
             let caretLeft = index.getBoundingClientRect().left - firstWordLeft + index.getBoundingClientRect().width;
@@ -513,7 +508,6 @@ function startTimerForClock() {
             clearInterval(timerIntervalId);
             return;
         }
-        // console.log(clock);
         clock--;
         stopWatch.innerText = clock;
         stopWatch.classList.remove('liveTimeEffects');
@@ -629,7 +623,6 @@ function moveCaret(index) {
 
 function moveCaretDown(afterIndex, index) {
     line++;
-    // console.log(line, totalLines);
     let caretLeft = 0;
     caret.style.left = `${caretLeft}px`;
     let caretTop = afterIndex.getBoundingClientRect().top - firstWordTop + 36;
@@ -643,7 +636,6 @@ function moveCaretDown(afterIndex, index) {
             typingArea.scrollTop = scrollDistance;
         }
     }
-    // console.log(scrollDistance);
 }
 
 function moveCaretBack(index) {

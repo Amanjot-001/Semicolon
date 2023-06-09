@@ -174,7 +174,6 @@ app.post('/showPost', (req, res) => {
   topicIndex = req.body.topicIndex;
   subjectIndex = req.body.subjectIndex;
   unitIndex = req.body.unitIndex;
-  // console.log(topicIndex, unitIndex, subjectIndex);
   res.sendStatus(200);
 })
 
@@ -217,7 +216,6 @@ app.post('/signIn', async (req, res, next) => {
     if (validPassword) {
       res.cookie('userId', user._id, { maxAge: 30 * 24 * 60 * 60 * 1000 });
       sessionId = res.cookie.userId;
-      // console.log(res.cookie.userId);
       flag2 = true;
       res.redirect('/');
     }
@@ -265,7 +263,6 @@ app.post('/updateScore', async (req, res) => {
     rank++;
   }
 
-  // console.log(user);
   res.sendStatus(200);
 })
 
@@ -344,5 +341,5 @@ app.get("/", async (req, res) => {
 })
 
 app.listen('8080', () => {
-  console.log('listneing');
+  console.log('listening');
 })

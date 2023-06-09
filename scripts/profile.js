@@ -215,7 +215,6 @@ popupWraper.addEventListener('click', (event) => {
 userPhotos.forEach((photo) => {
     photo.addEventListener('click', (event) => {
         value = event.target.dataset.value;
-        // console.log(value);
         updatePhoto();
         const selectedImageSrc = event.target.getAttribute('src');
         userMainPhoto.setAttribute('src', selectedImageSrc);
@@ -340,7 +339,6 @@ submit.addEventListener('click', () => {
     textMsg.blur();
     textMsg.removeAttribute('contenteditable', 'true');
     if (!thanksMsg.classList.contains('hidden')) {
-        // console.log('yo');
         thanksMsg.classList.add('hidden');
         thanksMsg.querySelector('p').textContent = 'Thank You for your Feedback!';
         textArea.style.display = 'initial';
@@ -365,9 +363,7 @@ submit.addEventListener('click', () => {
     }
     if (textMsg.textContent === '' || textMsg.textContent === 'Max 100 chars long') {
         textMsg.textContent = 'Max 100 chars long';
-        // console.log('in if');
     } else {
-        // console.log('in else');
         updateMsg();
         thanksMsg.classList.remove('hidden');
         textMsg.style.display = 'none';
@@ -540,7 +536,6 @@ function drawBasic() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('fetch)');
     fetchUserData();
 });
 
@@ -551,7 +546,6 @@ window.addEventListener('resize', () => {
 })
 
 function handleChartResize() {
-    console.log('chart');
     containerWidth = chartContainer.offsetWidth;
     containerHeight = chartContainer.offsetHeight;
     // google.charts.setOnLoadCallback(drawBasic);
@@ -579,21 +573,16 @@ function drawChart() {
         addToHashtable(date, 1);
     }
 
-    console.log(hashtable);
     const hashArray = Object.entries(hashtable);
-    console.log(hashArray);
 
     let dataArray = [];
     for (let i = 0; i < hashArray.length; i++) {
         let date = hashArray[i][0];
         let freq = hashArray[i][1];
-        console.log(date);
         let dateArray = date.split(" ");
-        console.log(dateArray);
         dataArray.push([new Date(parseInt(dateArray[0]), parseInt(dateArray[1]) - 1, parseInt(dateArray[2])), freq]);
     }
 
-    console.log(dataArray);
 
     dataTable.addRows(dataArray);
 
@@ -648,10 +637,8 @@ function drawChart() {
     };
     chart.draw(dataTable, options);
 }
-// console.log(document.cookie);
 
 async function updateMsg() {
-    // console.log('heelo')
     try {
         const response = await fetch('http://localhost:8080/updateMsg', {
             method: 'POST',
@@ -672,7 +659,6 @@ async function updateMsg() {
 }
 
 async function updateName() {
-    // console.log('name update')
     try {
         const response = await fetch('http://localhost:8080/updateName', {
             method: 'POST',
@@ -693,7 +679,6 @@ async function updateName() {
 }
 
 async function updatePhoto() {
-    // console.log('photo update')
     try {
         const response = await fetch('http://localhost:8080/updatePhoto', {
             method: 'POST',

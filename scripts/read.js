@@ -275,11 +275,8 @@ function showTopics() {
 };
 
 topics.addEventListener('click', async (event) => {
-  console.log(event.target.parentNode)
   if (event.target.parentNode.classList.contains('card')) {
-    // console.log("mf")
     let topicNo = event.target.parentNode.getAttribute('value');
-    console.log(topicNo)
     await fetch('http://localhost:8080/showPost', {
       method: "POST",
       headers: {
