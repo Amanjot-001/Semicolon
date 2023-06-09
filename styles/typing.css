@@ -371,16 +371,11 @@ nav {
 /* text */
 
 .typing-area {
-    /* position: sticky; */
     grid-row: 1 / span 3;
-    /* margin: 2rem; */
     background-color: var(--typing-area-color);
-    /* background-color: rgba(0, 0, 0, 0.5); */
     transition: background-color 300ms ease;
-    /* border-radius: 5px; */
     padding: 0px 20px;
     overflow-y: scroll;
-    /* filter: blur(4px); */
 }
 
 
@@ -543,10 +538,9 @@ nav {
 /* caps lock */
 
 .caps-lock {
-    position: absolute;
-    top: 0;
-    left: 0;
     visibility: hidden;
+    float: left;
+    clear: left;
 }
 
 .caps-lock>p {
@@ -886,4 +880,8 @@ nav {
     #nav-toggle-btn>span {
         display: none;
     }
+}
+
+.no-transition * {
+    transition: none !important;
 }

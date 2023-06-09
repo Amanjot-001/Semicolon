@@ -16,6 +16,14 @@ document.addEventListener('DOMContentLoaded', function () {
     document.documentElement.classList.add(defaultTheme);
 });
 
+window.addEventListener('load', function () {
+    document.body.classList.add('no-transition');
+
+    setTimeout(() => {
+        document.body.classList.remove('no-transition');
+    }, 1000);
+});
+
 window.addEventListener('mousemove', (e) => {
     mouseCaret.style.top = e.pageY + 'px';
     mouseCaret.style.left = e.pageX + 'px';
@@ -68,9 +76,9 @@ function handleMouseEnter() {
     const headingSecondaryText = document.querySelector(`[data-index="${activeIndex}"] .heading-secondary-text`);
     headingFrontText.style.opacity = '0';
     headingSecondaryText.style.opacity = '1';
-    scrollTopStop = true;
+    headingFrontText.style.transform = 'translateY(-100%)';
+    headingSecondaryText.style.transform = 'translateY(-100%)';
     mouseCaret.classList.add('caret-grow-heading');
-    scrollToBottom(headingText.scrollTop, headingText.scrollHeight, headingText);
     rotatingIcon.style.transform = "rotate(90deg)";
     rotatingIcon.style.transition = "transform 0.3s ease-out";
 }
@@ -82,38 +90,11 @@ function handleMouseExit() {
     const rotatingIcon = document.querySelector(`[data-index="${activeIndex}"] .heading .rotating-icon img`);
     headingFrontText.style.opacity = '1';
     headingSecondaryText.style.opacity = '0';
-    scrollDownStop = true;
+    headingFrontText.style.transform = 'translateY(0%)';
+    headingSecondaryText.style.transform = 'translateY(100%)';
     mouseCaret.classList.remove('caret-grow-heading');
-    scrollToTop(headingText.scrollTop, 0, headingText);
     rotatingIcon.style.transform = "rotate(0deg)";
     rotatingIcon.style.transition = "transform 0.3s ease-out";
-}
-
-
-function scrollToBottom(start, end, headingText) {
-    let scrolled = start;
-    let scrollEnd = end;
-    const scrollInterval = setInterval(() => {
-        headingText.scrollTop = scrolled;
-        scrolled += 1.5;
-        scrollTopStop = false;
-        if (scrollDownStop || scrolled >= scrollEnd) {
-            clearInterval(scrollInterval);
-        }
-    }, 1);
-}
-
-function scrollToTop(start, end, headingText) {
-    let scrolled = start;
-    let scrollEnd = end;
-    const scrollInterval = setInterval(() => {
-        headingText.scrollTop = scrolled;
-        scrolled -= 1.5;
-        scrollDownStop = false;
-        if (scrollTopStop || scrolled <= scrollEnd) {
-            clearInterval(scrollInterval);
-        }
-    }, 1);
 }
 
 function handleRightBtn() {

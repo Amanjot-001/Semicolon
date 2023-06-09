@@ -562,3 +562,7 @@ article>div {
         display: none;
     }
 }
+
+.no-transition * {
+    transition: none !important;
+}
