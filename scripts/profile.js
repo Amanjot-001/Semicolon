@@ -560,8 +560,13 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchUserData();
 });
 
+let initialHeight = window.innerHeight;
+
 window.addEventListener('resize', () => {
-    window.location.reload();
+    if (window.innerHeight != initialHeight)
+        window.location.reload();
+    else
+        initialHeight = window.innerHeight;
     handleChartResize();
     fetchUserData();
 })
