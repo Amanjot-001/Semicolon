@@ -613,6 +613,16 @@ a:hover {
         height: max(100%, 900px);
     }
 
+    .content::-webkit-scrollbar {
+        background-color: transparent;
+        width: 4px;
+    }
+    
+    .content::-webkit-scrollbar-thumb {
+        background-color: var(--main-text-color);
+        border-radius: 5px;
+    }
+
     .user {
         grid-column: 1;
         grid-row: 1;
@@ -758,6 +768,16 @@ a:hover {
         width: 100%;
         overflow-x: scroll;
         overflow-y: hidden;
+    }
+
+    .heatmap::-webkit-scrollbar {
+        background-color: transparent;
+        width: 2px;
+    }
+    
+    .heatmap::-webkit-scrollbar-thumb {
+        background-color: var(--main-text-color);
+        border-radius: 5px;
     }
 
     #chart_div {
@@ -972,6 +992,16 @@ a:hover {
 
     .mouseCaret {
         display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .upper {
+        gap: 0.5rem;
+    }
+
+    .photo {
+        width: 0.8rem;
     }
 }
 
