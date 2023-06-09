@@ -324,7 +324,7 @@ edit.addEventListener('click', () => {
     initMsg = textMsg.textContent;
     textMsg.setAttribute('contenteditable', 'true');
     textMsg.focus();
-    if (textMsg.textContent === 'Max 80 chars long')
+    if (textMsg.textContent === 'Max 100 chars long')
         textMsg.textContent = '';
 })
 
@@ -340,17 +340,17 @@ submit.addEventListener('click', () => {
         textMsg.style.display = 'initial';
         return;
     }
-    if (textMsg.textContent.length > 80) {
+    if (textMsg.textContent.length > 100) {
         thanksMsg.classList.remove('hidden');
-        thanksMsg.querySelector('p').textContent = 'Oops! More than 80 chars';
+        thanksMsg.querySelector('p').textContent = 'Oops! More than 100 chars';
         textMsg.style.display = 'none';
         textArea.style.display = 'flex';
         textArea.style.justifyContent = 'center';
         textArea.style.alignItems = 'center';
         return;
     }
-    if (textMsg.textContent === '' || textMsg.textContent === 'Max 80 chars long') {
-        textMsg.textContent = 'Max 80 chars long';
+    if (textMsg.textContent === '' || textMsg.textContent === 'Max 100 chars long') {
+        textMsg.textContent = 'Max 100 chars long';
         // console.log('in if');
     } else {
         // console.log('in else');
@@ -366,9 +366,9 @@ submit.addEventListener('click', () => {
 textMsg.addEventListener('paste', (event) => {
     event.preventDefault();
     const text = event.clipboardData.getData('text/plain');
-    if (text.length > 80) {
+    if (text.length > 100) {
         thanksMsg.classList.remove('hidden');
-        thanksMsg.querySelector('p').textContent = 'Oops! More than 80 chars';
+        thanksMsg.querySelector('p').textContent = 'Oops! More than 100 chars';
         textMsg.style.display = 'none';
         textArea.style.display = 'flex';
         textArea.style.justifyContent = 'center';
@@ -398,12 +398,12 @@ textMsg.addEventListener('focus', () => {
 });
 
 textMsg.addEventListener('input', () => {
-    const maxLength = 80;
+    const maxLength = 100;
     let currentText = textMsg.textContent;
     if (textMsg.textContent.length > maxLength) {
         currentText = currentText.slice(0, maxLength);
         thanksMsg.classList.remove('hidden');
-        thanksMsg.querySelector('p').textContent = 'Oops! More than 80 chars';
+        thanksMsg.querySelector('p').textContent = 'Oops! More than 100 chars';
         textMsg.style.display = 'none';
         textArea.style.display = 'flex';
         textArea.style.justifyContent = 'center';
@@ -424,7 +424,7 @@ document.addEventListener('click', (e) => {
         textMsg.blur();
         textMsg.removeAttribute('contenteditable', 'true');
         if (textMsg.textContent === '')
-            textMsg.textContent = 'Max 80 chars long';
+            textMsg.textContent = 'Max 100 chars long';
         edit.style.color = 'var(--main-text-color)';
     }
 
