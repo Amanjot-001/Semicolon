@@ -135,7 +135,6 @@ async function fetchData() {
         unit = obj.unitIndex;
         sub = obj.subjectIndex;
         data = obj.data;
-        console.log(obj);
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
     }

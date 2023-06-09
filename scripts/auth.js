@@ -113,7 +113,6 @@ singUpBtn.addEventListener('click', () => {
 mobileSignIn.addEventListener('click', () => {
     reg.style.left = '-100%';
     singIn.style.left = '0%';
-    // singIn.style.display = 'flex';
 })
 
 const signInForm = document.querySelector('.signIn form');
@@ -152,7 +151,6 @@ signInForm.addEventListener("submit", async (e) => {
 const regForm = document.querySelector(".reg form");
 
 regForm.addEventListener("submit", async (e) => {
-    console.log('in ')
     e.preventDefault();
     const username = document.querySelector(".reg form .userName");
     const password = document.querySelector('.reg form .password');
