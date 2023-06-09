@@ -149,10 +149,6 @@ async function fetchData() {
   radata = await RandomData.find({});
 }
 
-app.get('/dog', async (req, res) => {
-  res.json(data);
-})
-
 app.get('/read', async (req, res) => {
   try {
     if (data == '') {
@@ -336,12 +332,6 @@ app.post('/updatePhoto', async (req, res) => {
     res.status(500).send('Error updating name');
   }
 });
-
-app.get('/userfind', async (req, res) => {
-  const user = await User.find({});
-  // await User.deleteMany({});
-  res.send(user);
-})
 
 app.get('/profile', async (req, res) => {
   try {
