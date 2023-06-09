@@ -111,7 +111,7 @@ const userSchema = new mongoose.Schema({
   },
   message: {
     type: String,
-    maxlength: 80,
+    maxlength: 100,
     default: ''
   }
 });
