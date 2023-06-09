@@ -498,7 +498,7 @@ function drawBasic() {
 
     let dataArray = [];
     for (let i = 0; i < userData.score.length; i++) {
-        dataArray.push([i + 1, parseInt(userData.score[i].wpm)]);
+        dataArray.push([i + 1, parseFloat(userData.score[i].wpm)]);
     }
 
     data.addRows(dataArray);
@@ -526,6 +526,13 @@ function drawBasic() {
         width: containerWidth,
         height: containerHeight,
         legend: 'none',
+        series: {
+            0: {
+                pointShape: 'circle',
+                pointSize: 5,
+                color: 'yellow',
+            },
+        },
     };
 
     chart = new google.visualization.LineChart(document.getElementById('chart_div'));
