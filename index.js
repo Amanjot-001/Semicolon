@@ -128,10 +128,20 @@ const Random = new mongoose.Schema({
 
 const RandomData = mongoose.model('RandomData', Random);
 
-app.use(async (req, res, next) => {
+app.use((req, res, next) => {
   sessionId = req.cookies.userId;
-  if (data == '') await fetchData();
   next();
+})
+
+app.post('/everything', async (req, res) => {
+  try {
+    if (data == '') {
+      await fetchData();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  res.sendStatus(200);
 })
 
 async function fetchData() {
@@ -144,6 +154,13 @@ app.get('/dog', async (req, res) => {
 })
 
 app.get('/read', async (req, res) => {
+  try {
+    if (data == '') {
+      await fetchData();
+    }
+  } catch (error) {
+    console.log(error);
+  }
   res.render('read', { data, sessionId });
 })
 
@@ -162,7 +179,14 @@ app.get('/topicTest', (req, res) => {
   res.render('typing', { content, sessionId });
 })
 
-app.get('/show', (req, res) => {
+app.get('/show', async (req, res) => {
+  try {
+    if (data == '') {
+      await fetchData();
+    }
+  } catch (error) {
+    console.log(error);
+  }
   res.render('show', { topicIndex, subjectIndex, unitIndex, data, sessionId });
 })
 
