@@ -66,6 +66,16 @@ maxLines = Math.floor((height - 35) / 36) - 3;
 document.addEventListener('DOMContentLoaded', function () {
     var defaultTheme = 'theme1';
     document.documentElement.classList.add(defaultTheme);
+
+    const defaultTimer = document.querySelector('[value="30"]');
+
+    time.style.color = "#ffd700";
+    clockActive = true;
+    clockHover = false;
+    defaultTimer.style.color = "#ffd700";
+    clock = defaultTimer.getAttribute("value");
+    liActiveValue = defaultTimer.getAttribute("value");
+    stopWatch.innerText = clock;
 });
 
 
@@ -727,6 +737,9 @@ inputText.addEventListener('click', () => {
 inputText.addEventListener('paste', (event) => {
     event.preventDefault();
     const text = event.clipboardData.getData('text/plain');
+    if (text.length > 2500) {
+        return;
+    }
     inputText.textContent = text;
 });
 
