@@ -268,6 +268,13 @@ nameEditBtn.addEventListener('click', () => {
     }
 })
 
+userName.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        nameEditBtn.click();
+    }
+});
+
 userName.addEventListener('paste', (event) => {
     event.preventDefault();
     const text = event.clipboardData.getData('text/plain');
@@ -347,6 +354,13 @@ submit.addEventListener('click', () => {
         textArea.style.display = 'flex';
         textArea.style.justifyContent = 'center';
         textArea.style.alignItems = 'center';
+        setTimeout(() => {
+            textMsg.textContent = initMsg;
+            thanksMsg.classList.add('hidden');
+            textMsg.style.display = 'initial';
+            textArea.style.display = 'initial';
+            textMsg.focus();
+        }, 2000);
         return;
     }
     if (textMsg.textContent === '' || textMsg.textContent === 'Max 100 chars long') {
