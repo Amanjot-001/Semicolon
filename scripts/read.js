@@ -223,7 +223,7 @@ subjectMobile.forEach(sub => {
   sub.addEventListener('click', event => {
     subNo = event.target.getAttribute('value');
     subjectMobile.forEach(subColor => {
-      subColor.style.color = "rgba(116, 112, 131)";
+      subColor.style.color = "var(--main-text-color)";
     })
     sub.style.color = 'yellow';
     showTopics();
@@ -234,7 +234,7 @@ subject.forEach(sub => {
   sub.addEventListener('click', event => {
     subNo = event.target.getAttribute('value');
     subject.forEach(subColor => {
-      subColor.style.color = "rgba(116, 112, 131)";
+      subColor.style.color = "var(--main-text-color)";
     })
     sub.style.color = 'yellow';
     showTopics();

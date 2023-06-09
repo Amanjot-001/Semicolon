@@ -504,7 +504,7 @@ nav {
 }
 
 .hovered-link {
-    color: white;
+    color: var(--hover-color);
 }
 
 .clicked {

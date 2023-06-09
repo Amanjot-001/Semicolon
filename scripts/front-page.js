@@ -31,7 +31,7 @@ window.addEventListener('mousemove', (e) => {
 
 borderLinks.forEach(link => {
     link.addEventListener('mouseover', () => {
-        link.style.color = 'hover-color';
+        link.style.color = 'var(--hover-color)';
         mouseCaret.classList.remove('mouseCaret');
     })
     link.addEventListener('mouseleave', () => {

@@ -93,6 +93,10 @@ a {
     transition: font-family, color 300ms ease;
 }
 
+a:hover {
+    color: var(--hover-color);
+}
+
 .logo-name {
     margin-left: 2rem;
     font-size: 2.2rem;
@@ -563,7 +567,7 @@ a {
 }
 
 .hovered-link {
-    color: white;
+    color: var(--hover-color);
 }
 
 .hovered-border {
