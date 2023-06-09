@@ -314,9 +314,8 @@ app.get('/userfind', async (req, res) => {
 app.get('/profile', async (req, res) => {
   try {
     userData = await User.findOne({ _id: sessionId });
-    // console.log(req.session.user_id)
-    // res.send(userData)
-    res.render('profile', { userData })
+    const totalUsers = await User.countDocuments();
+    res.render('profile', { userData, totalUsers });
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
