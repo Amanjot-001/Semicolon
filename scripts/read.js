@@ -217,7 +217,7 @@ const topics = document.querySelector('.topics');
 const spanSem = document.querySelector(".sem-no");
 const spanUnit = document.querySelector('.unit-no');
 
-let unitNo = 0, subNo = 0, semesterNo = 0;
+let unitNo = 0, subNo = 0, semesterNo = 3;
 
 subjectMobile.forEach(sub => {
   sub.addEventListener('click', event => {
@@ -226,7 +226,12 @@ subjectMobile.forEach(sub => {
       subColor.style.color = "var(--main-text-color)";
     })
     sub.style.color = 'yellow';
-    showTopics();
+    if (semesterNo == 3) {
+      showTopics();
+    }
+    else {
+      showMessage();
+    }
   })
 });
 
@@ -237,7 +242,12 @@ subject.forEach(sub => {
       subColor.style.color = "var(--main-text-color)";
     })
     sub.style.color = 'yellow';
-    showTopics();
+    if (semesterNo == 3) {
+      showTopics();
+    }
+    else {
+      showMessage();
+    }
   })
 });
 
@@ -245,7 +255,12 @@ unit.forEach(units => {
   units.addEventListener('click', event => {
     unitNo = event.target.getAttribute('value');
     spanUnit.textContent = `${parseInt(unitNo) + 1}`;
-    showTopics();
+    if (semesterNo == 3) {
+      showTopics();
+    }
+    else {
+      showMessage();
+    }
   })
 });
 
@@ -253,14 +268,42 @@ sem.forEach(ssem => {
   ssem.addEventListener('click', event => {
     semesterNo = event.target.getAttribute('value');
     spanSem.textContent = `${parseInt(semesterNo) + 1}`;
-    showTopics();
+    if (semesterNo == 3) {
+      showTopics();
+    }
+    else {
+      showMessage();
+    }
   })
 })
+
+function showMessage() {
+  topics.innerHTML = '';
+  const messageWrapper = document.createElement('div');
+  messageWrapper.classList.add('message-wrapper');
+
+  const message = document.createElement('div');
+  message.classList.add('message');
+
+  message.textContent = 'SOON TO BE UPDATED';
+
+  messageWrapper.appendChild(message);
+  topics.appendChild(messageWrapper)
+
+  subject.forEach(sub => {
+    sub.textContent = '';
+  })
+}
 
 function showTopics() {
   let topicIndex = 0;
   topics.innerHTML = '';
-  for (let topic of data[0].sem[semesterNo].subjects[subNo].units[unitNo].topics) {
+  let i = 0;
+  subject.forEach(sub => {
+    sub.textContent = data[0].sem[0].subjects[i].subjectName;
+    i++;
+  })
+  for (let topic of data[0].sem[0].subjects[subNo].units[unitNo].topics) {
     const card = document.createElement('div');
     card.classList.add('card');
     card.setAttribute('value', topicIndex++);
