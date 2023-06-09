@@ -110,9 +110,18 @@ Name.addEventListener('mouseleave', () => {
 
 photoEditBtn.addEventListener('mouseover', () => {
     mouseCaret.classList.remove('mouseCaret');
+    photoEditBtn.style.color = 'var(--hover-color)'
 })
 photoEditBtn.addEventListener('mouseleave', () => {
     mouseCaret.classList.add('mouseCaret');
+    photoEditBtn.style.color = 'var(--main-text-color)'
+})
+
+nameEditBtn.addEventListener('mouseover', () => {
+    nameEditBtn.style.color = 'var(--hover-color)'
+})
+nameEditBtn.addEventListener('mouseleave', () => {
+    nameEditBtn.style.color = 'var(--main-text-color)'
 })
 
 reviewHeading.addEventListener('mouseover', () => {
@@ -131,16 +140,20 @@ textArea.addEventListener('mouseleave', () => {
 
 edit.addEventListener('mouseover', () => {
     mouseCaret.classList.remove('mouseCaret');
+    edit.style.color = 'var(--hover-color)'
 })
 edit.addEventListener('mouseleave', () => {
     mouseCaret.classList.add('mouseCaret');
+    edit.style.color = 'var(--main-text-color)'
 })
 
 submit.addEventListener('mouseover', () => {
     mouseCaret.classList.remove('mouseCaret');
+    submit.style.color = 'var(--hover-color)'
 })
 submit.addEventListener('mouseleave', () => {
     mouseCaret.classList.add('mouseCaret');
+    submit.style.color = 'var(--main-text-color)'
 })
 
 graph.addEventListener('mouseover', () => {

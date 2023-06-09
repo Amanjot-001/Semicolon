@@ -557,11 +557,11 @@ span {
 }
 
 .hovered-link {
-    color: white;
+    color: var(--hover-color);
 }
 
 .about a:hover {
-    color: white;
+    color: var(--hover-color);
 }
 
 .clicked {
