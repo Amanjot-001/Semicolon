@@ -5,6 +5,7 @@ const rightBtn = document.querySelectorAll('.move-btns .right-btn');
 const leftBtn = document.querySelectorAll('.move-btns .left-btn');
 const borderLinks = document.querySelectorAll('.border-link');
 const nav = document.querySelector('nav');
+const loading = document.querySelector('.loading-wrapper');
 
 let scrollDownStop = false;
 let scrollTopStop = false;
@@ -195,6 +196,15 @@ function getAppliedTheme() {
     var themes = ['theme1', 'theme2', 'theme3'];
     var appliedTheme = themes.find(theme => document.documentElement.classList.contains(theme));
     return appliedTheme;
+}
+
+fetchEverything();
+async function fetchEverything() {
+    await fetch('http://localhost:8080/everything', {
+        method: "POST",
+
+    })
+    loading.style.display = 'none';
 }
 
 fetchUsers();
