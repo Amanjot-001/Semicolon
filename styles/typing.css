@@ -344,6 +344,20 @@ nav {
     animation: enlarge 1s ease infinite;
 }
 
+@-webkit-keyframes enlarge {
+    0% {
+        font-size: 3.5rem;
+    }
+
+    50% {
+        font-size: 5rem;
+    }
+
+    100% {
+        font-size: 3.5rem;
+    }
+}
+
 @keyframes enlarge {
     0% {
         font-size: 3.5rem;
@@ -457,6 +471,18 @@ nav {
     margin: 0;
     padding: 0;
     animation: blink 1s infinite;
+}
+
+@-webkit-keyframes blink {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
 }
 
 @keyframes blink {
