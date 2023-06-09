@@ -76,6 +76,13 @@ document.addEventListener('DOMContentLoaded', function () {
     stopWatch.innerText = clock;
 });
 
+window.addEventListener('load', function () {
+    document.body.classList.add('no-transition');
+
+    setTimeout(() => {
+        document.body.classList.remove('no-transition');
+    }, 1000);
+});
 
 input.style.height = '0';
 input.style.width = '0';

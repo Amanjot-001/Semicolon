@@ -1016,3 +1016,7 @@ a {
         font-size: 1.5rem;
     }
 }
+
+.no-transition * {
+    transition: none !important;
+}

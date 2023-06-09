@@ -33,6 +33,14 @@ document.addEventListener('DOMContentLoaded', function () {
     document.documentElement.classList.add(defaultTheme);
 });
 
+window.addEventListener('load', function () {
+    document.body.classList.add('no-transition');
+
+    setTimeout(() => {
+        document.body.classList.remove('no-transition');
+    }, 1000);
+});
+
 window.addEventListener('mousemove', (e) => {
     mouseCaret.style.top = e.pageY + 'px';
     mouseCaret.style.left = e.pageX + 'px';
