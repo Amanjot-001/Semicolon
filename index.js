@@ -164,7 +164,14 @@ app.get('/read', async (req, res) => {
   res.render('read', { data, sessionId });
 })
 
-app.get('/test', (req, res) => {
+app.get('/test', async (req, res) => {
+  try {
+    if (data == '') {
+      await fetchData();
+    }
+  } catch (error) {
+    console.log(error);
+  }
   const randomNumber = Math.floor(Math.random() * 15);
   content = radata[0].data[randomNumber].content;
   res.render('typing', { content, sessionId });
@@ -260,8 +267,12 @@ app.post('/updateScore', async (req, res) => {
   }
   const user = await User.findOne({ _id: sessionId });
 
-  const S = req.body.score;
+  let S = req.body.score;
   const A = req.body.accuracy;
+
+  if(S == Infinity || S == null) {
+    S = 0;
+  }
 
   user.score.push({
     wpm: S,
