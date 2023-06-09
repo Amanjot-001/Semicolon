@@ -183,7 +183,10 @@ app.get('/signIn', (req, res) => {
 })
 
 app.post('/register', async (req, res) => {
-  const { name, username, password } = req.body;
+  let { name, username, password } = req.body;
+  name = name.replace(/\s+/g, " ").trim();
+  username = username.replace(/\s+/g, " ").trim();
+  password = password.replace(/\s+/g, " ").trim();
   let flag = false;
   const hash = await bcrypt.hash(password, 12);
   const user = new User({

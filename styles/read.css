@@ -527,6 +527,9 @@ span {
         display: flex;
     }
 
+    .mouseCaret {
+        display: none;
+    }
 }
 
 .mouseCaret {
