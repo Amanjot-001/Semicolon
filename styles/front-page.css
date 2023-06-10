@@ -402,6 +402,19 @@ article[data-index="1"] .image {
     cursor: none;
 }
 
+.personel-info {
+    font-size: 1.5rem !important; 
+}
+
+.personel-info > a {
+    font-size: 1.2rem;
+    color: var(--secondary-text-color);
+}
+
+.personel-info > a:hover {
+    color: var(--hover-color);
+}
+
 .mouseCaret {
     position: absolute;
     height: 1rem;
