@@ -20,10 +20,7 @@ app.use("/styles", express.static(__dirname + "/styles"));
 app.use("/scripts", express.static(__dirname + "/scripts"));
 app.use("/images", express.static(__dirname + "/images"));
 
-mongoose
-  .connect(process.env.MONGO_PROD_URL)
-  .then(() => console.log("Database connected!"))
-  .catch(err => console.log(err));
+mongoose.connect(process.env.MONGO_PROD_URL)
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -130,13 +127,13 @@ const RandomData = mongoose.model('RandomData', Random);
 
 app.use(async (req, res, next) => {
   sessionId = req.cookies.userId;
-  if(req.url != '/'){
+  if (req.url != '/') {
     try {
       if (data == '') {
         await fetchData();
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
   next();
@@ -152,7 +149,7 @@ app.post('/everything', async (req, res) => {
       await fetchData();
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
   res.sendStatus(200);
 })
@@ -258,7 +255,7 @@ app.post('/updateScore', async (req, res) => {
   let S = req.body.score;
   const A = req.body.accuracy;
 
-  if(S == Infinity || S == null) {
+  if (S == Infinity || S == null) {
     S = 0;
   }
 
@@ -296,7 +293,7 @@ app.post('/updateMsg', async (req, res) => {
     await userData.save();
     res.sendStatus(200);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     res.status(500).send('Error updating message');
   }
 });
@@ -308,7 +305,7 @@ app.post('/updateName', async (req, res) => {
     await userData.save();
     res.sendStatus(200);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     res.status(500).send('Error updating name');
   }
 });
@@ -320,7 +317,7 @@ app.post('/updatePhoto', async (req, res) => {
     await userData.save();
     res.sendStatus(200);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     res.status(500).send('Error updating name');
   }
 });
@@ -331,7 +328,7 @@ app.get('/profile', async (req, res) => {
     const totalUsers = await User.countDocuments();
     res.render('profile', { userData, totalUsers });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     res.sendStatus(500);
   }
 });
@@ -358,5 +355,5 @@ app.get("/", async (req, res) => {
 })
 
 app.listen('8080', () => {
-  console.log('listening');
+  // console.log('listening');
 })
