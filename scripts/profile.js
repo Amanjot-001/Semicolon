@@ -229,7 +229,7 @@ photoEditBtn.addEventListener('click', () => {
 })
 
 popupWraper.addEventListener('click', (event) => {
-    if (!event.target.classList.contains('photo-select'))
+    // if (!event.target.classList.contains('photo-select'))
         popup.style.display = 'none';
 })
 
