@@ -6,6 +6,7 @@ const leftBtn = document.querySelectorAll('.move-btns .left-btn');
 const borderLinks = document.querySelectorAll('.border-link');
 const nav = document.querySelector('nav');
 const loading = document.querySelector('.loading-wrapper');
+const gitLinks = document.querySelectorAll('.personel-info > a');
 
 let scrollDownStop = false;
 let scrollTopStop = false;
@@ -67,6 +68,15 @@ navLinks.forEach(link => {
     link.addEventListener('mouseleave', () => {
         mouseCaret.classList.remove('caret-grow');
         link.classList.remove('hovered-link');
+    })
+})
+
+gitLinks.forEach(link => {
+    link.addEventListener('mouseover', () => {
+        mouseCaret.classList.remove('mouseCaret');
+    })
+    link.addEventListener('mouseleave', () => {
+        mouseCaret.classList.add('mouseCaret');
     })
 })
 
