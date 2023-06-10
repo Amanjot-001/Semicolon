@@ -15,6 +15,7 @@ const acc = document.querySelectorAll('.acc');
 const label = document.querySelectorAll('label');
 const input = document.querySelectorAll('input');
 
+let initialHeight = window.innerHeight;
 let clickCounter = 0;
 
 window.addEventListener('mousemove', (e) => {
@@ -23,7 +24,10 @@ window.addEventListener('mousemove', (e) => {
 })
 
 window.addEventListener('resize', () => {
-    window.location.reload();
+    if(window.innerHeight != initialHeight)
+        window.location.reload();
+    else
+        initialHeight = window.innerHeight;
 })
 
 logo.addEventListener('mouseover', () => {
