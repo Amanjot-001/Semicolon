@@ -617,7 +617,7 @@ a:hover {
         background-color: transparent;
         width: 4px;
     }
-    
+
     .content::-webkit-scrollbar-thumb {
         background-color: var(--main-text-color);
         border-radius: 5px;
@@ -774,7 +774,7 @@ a:hover {
         background-color: transparent;
         width: 2px;
     }
-    
+
     .heatmap::-webkit-scrollbar-thumb {
         background-color: var(--main-text-color);
         border-radius: 5px;
@@ -819,6 +819,12 @@ a:hover {
 
     .photo {
         width: 1rem;
+    }
+
+    .photo-select img {
+        width: 5rem;
+        border-radius: 50%;
+        cursor: pointer;
     }
 
     .photo img {
