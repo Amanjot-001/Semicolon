@@ -210,7 +210,7 @@ function getAppliedTheme() {
 
 fetchEverything();
 async function fetchEverything() {
-    await fetch('http://localhost:8080/everything', {
+    await fetch('https://semicolon23-j8cl.onrender.com/everything', {
         method: "POST",
 
     })
@@ -219,7 +219,7 @@ async function fetchEverything() {
 
 fetchUsers();
 async function fetchUsers() {
-    fetch('http://localhost:8080/leadborad')
+    fetch('https://semicolon23-j8cl.onrender.com/leadborad')
         .then(response => response.json())
         .then(data => {
             users = data;
